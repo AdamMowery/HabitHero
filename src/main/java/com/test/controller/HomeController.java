@@ -1,6 +1,5 @@
 package com.test.controller;
 
-
 import com.test.models.MasterfriendsEntity;
 import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
@@ -23,20 +22,17 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-
     @RequestMapping("/")
 
     public ModelAndView landingPage() {
         FBConnection fbConnection = new FBConnection();
-
 
         return new
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
 
     }
 
-
-    @RequestMapping("mainPage")
+    @RequestMapping("habits")
 
     public ModelAndView welcome(@RequestParam("code") String code, Model model) {
 
@@ -117,7 +113,6 @@ public class HomeController {
                 ModelAndView("habits", "message", "Your id: " + id);
     }
 
-
     private Criteria userNamelist() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFact = cfg.buildSessionFactory();
@@ -142,7 +137,6 @@ public class HomeController {
         return selectTask.createCriteria(MasterfriendsEntity.class);
     }
 
-
     @RequestMapping("leaderboard")
 
     public ModelAndView leading(@RequestParam("code") String code) {
@@ -153,7 +147,6 @@ public class HomeController {
         FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
         String id = facebookConnection.getId();
         String out = facebookConnection.getOut();
-
 
         // todo add points for all friends of this user
 

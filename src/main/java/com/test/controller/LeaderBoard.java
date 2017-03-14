@@ -1,14 +1,11 @@
 package com.test.controller;
 
-import javax.persistence.Query;
-import java.util.List;
-
 /**
  * Created by Owner on 3/14/2017.
  */
 public class LeaderBoard {
 
-
+/**
     /// example A of an inner join
     String hql =
             "select eq.euipmentName,eq.type " +
@@ -33,6 +30,6 @@ for(
         Category category = (Category) aRow[1];
         System.out.println(product.getName() + " - " + category.getName());
     }
-
+**/
 
 }
