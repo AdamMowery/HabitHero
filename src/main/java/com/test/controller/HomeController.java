@@ -158,7 +158,7 @@ public class HomeController {
         // todo add points for all friends of this user
 
         return new
-                ModelAndView("leaderBoard", "message", out);
+                ModelAndView("leaderboard", "message", out);
 
     }
 
