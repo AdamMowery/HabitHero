@@ -64,7 +64,7 @@ public class HomeController {
         String email = fbProfileData.get("email");
 //    ********* array list of users**************
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userid", "%" + out + "%"));
+        c.add(Restrictions.like("userid", "%" + id + "%"));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
 //  *********** add user to database if not already there ******
