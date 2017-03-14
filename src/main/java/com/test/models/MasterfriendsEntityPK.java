@@ -1,19 +1,18 @@
 package com.test.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by adamm on 3/14/2017.
  */
-@Entity
-@Table(name = "masterfriends", schema = "Habitz", catalog = "")
-@IdClass(MasterfriendsEntityPK.class)
-public class MasterfriendsEntity {
+public class MasterfriendsEntityPK implements Serializable {
     private String userId;
     private String friendId;
 
-    @Id
     @Column(name = "userID", nullable = false, length = 20)
+    @Id
     public String getUserId() {
         return userId;
     }
@@ -22,8 +21,8 @@ public class MasterfriendsEntity {
         this.userId = userId;
     }
 
-    @Id
     @Column(name = "friendID", nullable = false, length = 45)
+    @Id
     public String getFriendId() {
         return friendId;
     }
@@ -37,7 +36,7 @@ public class MasterfriendsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MasterfriendsEntity that = (MasterfriendsEntity) o;
+        MasterfriendsEntityPK that = (MasterfriendsEntityPK) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (friendId != null ? !friendId.equals(that.friendId) : that.friendId != null) return false;

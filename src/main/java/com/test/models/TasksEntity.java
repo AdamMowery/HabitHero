@@ -1,26 +1,34 @@
 package com.test.models;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
- * Created by adamm on 3/13/2017.
+ * Created by adamm on 3/14/2017.
  */
 @Entity
 @Table(name = "tasks", schema = "Habitz", catalog = "")
 public class TasksEntity {
-    private Integer userId;
+    private String userId;
+    private String taskId;
 
     @Basic
-    @Column(name = "userID", nullable = true)
-    public Integer getUserId() {
+    @Column(name = "userID", nullable = false, length = 20)
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    @Id
+    @Column(name = "taskID", nullable = false, length = 45)
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     @Override
@@ -31,12 +39,15 @@ public class TasksEntity {
         TasksEntity that = (TasksEntity) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (taskId != null ? !taskId.equals(that.taskId) : that.taskId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return userId != null ? userId.hashCode() : 0;
+        int result = userId != null ? userId.hashCode() : 0;
+        result = 31 * result + (taskId != null ? taskId.hashCode() : 0);
+        return result;
     }
 }
