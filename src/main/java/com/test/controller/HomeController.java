@@ -23,15 +23,7 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-    //    @RequestMapping("listCustomers")public ModelAndView listCustomer(){
-//        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-//    SessionFactory sessionFact = cfg.buildSessionFactory();
-//    Session selectusers = sessionFact.openSession();
-//        selectusers.beginTransaction();
-//        Criteria c = selectusers.createCriteria(UsernamesEntity.class);
-//        ArrayList<UsernamesEntity> customerList=(ArrayList<UsernamesEntity>)c.list();
-//        return new ModelAndView("mainPage","cList",customerList);
-//    }
+
     @RequestMapping("/")
 
     public ModelAndView landingPage() {
@@ -78,15 +70,51 @@ public class HomeController {
         }
 //   ******* Table of tasks *********
         Criteria t = tasks();
+        t.add(Restrictions.like("userId", "%" + id + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("task", taskList);
-
-        // Todo add friends
-
+//   ******* Table of friends *******
+        Criteria f = friends();
+        f.add(Restrictions.like("userId", "%" + id + "%"));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        model.addAttribute("friends", friendsList);
 
         return new
-                ModelAndView("mainPage", "message", out);
+                ModelAndView("habits", "message", "your id: " + id);
 
+    }
+
+    @RequestMapping("addTask")
+
+    public ModelAndView addTask(@RequestParam("code") String code,
+                                @RequestParam("task") String taskId,
+                                Model model) {
+        if (code == null || code.equals("")) {
+            throw new RuntimeException(
+                    "ERROR:Didn't get code parameter in callback.");
+        }
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+        String id = facebookConnection.getId();
+        Criteria c = tasks();
+        c.add(Restrictions.like("userID", "%" + id + "%"));
+        c.add(Restrictions.like("taskID", "%" + taskId + "%"));
+        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
+
+//  *********** add task to database if not already there ******
+        if (taskList.size() == 0) {
+            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFact = cfg.buildSessionFactory();
+            Session session = sessionFact.openSession();
+            Transaction tx = session.beginTransaction();
+            TasksEntity newTask = new TasksEntity();
+            newTask.setUserId(taskId);
+            session.save(newTask);
+            tx.commit();
+            session.close();
+        }
+        model.addAttribute("task", taskList);
+        return new
+                ModelAndView("habits", "message", "Your id: " + id);
     }
 
 
@@ -104,6 +132,14 @@ public class HomeController {
         Session selectTask = sessionFact.openSession();
         selectTask.beginTransaction();
         return selectTask.createCriteria(TasksEntity.class);
+    }
+
+    private Criteria friends() {
+        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+        SessionFactory sessionFact = cfg.buildSessionFactory();
+        Session selectTask = sessionFact.openSession();
+        selectTask.beginTransaction();
+        return selectTask.createCriteria(MasterfriendsEntity.class);
     }
 
 
