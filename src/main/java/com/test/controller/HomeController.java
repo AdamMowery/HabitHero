@@ -1,6 +1,5 @@
 package com.test.controller;
 
-
 import com.test.models.MasterfriendsEntity;
 import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
@@ -22,13 +21,12 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-String code;
+
 
     @RequestMapping("/")
 
     public ModelAndView landingPage() {
         FBConnection fbConnection = new FBConnection();
-
 
         return new
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
@@ -118,7 +116,6 @@ String code;
                 ModelAndView("habits", "message", "Your id: " + id);
     }
 
-
     private Criteria userNamelist() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFact = cfg.buildSessionFactory();
@@ -143,7 +140,6 @@ String code;
         return selectTask.createCriteria(MasterfriendsEntity.class);
     }
 
-
     @RequestMapping("leaderboard")
 
     public ModelAndView leading(FacebookConnection connect) {
@@ -154,7 +150,6 @@ String code;
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-
 
 
         // todo add points for all friends of this user
