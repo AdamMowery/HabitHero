@@ -1,6 +1,5 @@
 package com.test.controller;
 
-
 import com.test.models.MasterfriendsEntity;
 import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
@@ -23,31 +22,39 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-
     @RequestMapping("/")
 
     public ModelAndView landingPage() {
         FBConnection fbConnection = new FBConnection();
 
-
         return new
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
 
     }
+    @RequestMapping("getPermission")
+
+    public ModelAndView permission(@RequestParam("code") String code) {
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+
+        return new
+                ModelAndView("habits", "message", facebookConnection);
+
+    }
 
 
-    @RequestMapping("mainPage")
+    @RequestMapping("habits")
 
-    public ModelAndView welcome(@RequestParam("code") String code, Model model) {
+    public ModelAndView welcome(FacebookConnection connect, Model model) {
+        String code = connect.code;
+        String id = connect.id;
+        String out = connect.out;
+        String email = connect.email;
 
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
-        String out = facebookConnection.getOut();
-        String email = facebookConnection.getEmail();
+
 //    ********* array list of users**************
         Criteria c = userNamelist();
         c.add(Restrictions.like("userid", "%" + id + "%"));
@@ -86,15 +93,16 @@ public class HomeController {
 
     @RequestMapping("addTask")
 
-    public ModelAndView addTask(@RequestParam("code") String code,
+    public ModelAndView addTask(FacebookConnection connect,
                                 @RequestParam("task") String taskId,
                                 Model model) {
+        String id = connect.id;
+        String code = connect.code;
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
+
         Criteria c = tasks();
         c.add(Restrictions.like("userID", "%" + id + "%"));
         c.add(Restrictions.like("taskID", "%" + taskId + "%"));
@@ -116,7 +124,6 @@ public class HomeController {
         return new
                 ModelAndView("habits", "message", "Your id: " + id);
     }
-
 
     private Criteria userNamelist() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
@@ -142,23 +149,21 @@ public class HomeController {
         return selectTask.createCriteria(MasterfriendsEntity.class);
     }
 
-
     @RequestMapping("leaderboard")
 
-    public ModelAndView leading(@RequestParam("code") String code) {
+    public ModelAndView leading(FacebookConnection connect) {
+        String code = connect.code;
+        String id = connect.id;
+        String name = connect.out;
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
-        String out = facebookConnection.getOut();
-
 
         // todo add points for all friends of this user
 
         return new
-                ModelAndView("leaderboard", "message", out);
+                ModelAndView("leaderboard", "message", name);
 
     }
 
@@ -201,6 +206,14 @@ public class HomeController {
         private String email;
 
         public FacebookConnection(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
             this.code = code;
         }
 

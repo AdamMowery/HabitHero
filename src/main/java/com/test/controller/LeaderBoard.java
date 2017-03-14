@@ -1,13 +1,14 @@
 package com.test.controller;
 
-import javax.persistence.Query;
-import java.util.List;
-
 /**
  * Created by Owner on 3/14/2017.
  */
 public class LeaderBoard {
 
+<<<<<<< HEAD
+=======
+/**
+>>>>>>> b6647390569e2f0be3cf3d63f5967f073e121ebe
     /// example A of an inner join
 -    String hql =
             -            "select eq.euipmentName,eq.type " +
@@ -34,6 +35,15 @@ public class LeaderBoard {
         -    }
 +
 
+<<<<<<< HEAD
 
+=======
+    {
+        Product product = (Product) aRow[0];
+        Category category = (Category) aRow[1];
+        System.out.println(product.getName() + " - " + category.getName());
+    }
+**/
+>>>>>>> b6647390569e2f0be3cf3d63f5967f073e121ebe
 
 }
