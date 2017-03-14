@@ -29,11 +29,11 @@ ${message}
                 <form name="sentMessage" id="contactForm" novalidate>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="newtask">Enter new habit here. </label>
+                            <label for="task">Enter new habit here. </label>
                             <form action="addTask" method="post">
 
 
-                            <input type="text" class="form-control" placeholder="New Task" id="newtask">
+                            <input type="text" class="form-control" placeholder="New Task" id="task">
                                 <input type="submit" value="post">
 
                                 <!-- <button type="submit" class="btn btn-success btn-lg">ADD</button> -->

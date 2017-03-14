@@ -31,19 +31,30 @@ public class HomeController {
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
 
     }
+    @RequestMapping("getPermission")
+
+    public ModelAndView permission(@RequestParam("code") String code) {
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+
+        return new
+                ModelAndView("habits", "message", facebookConnection);
+
+    }
+
 
     @RequestMapping("habits")
 
-    public ModelAndView welcome(@RequestParam("code") String code, Model model) {
+    public ModelAndView welcome(FacebookConnection connect, Model model) {
+        String code = connect.code;
+        String id = connect.id;
+        String out = connect.out;
+        String email = connect.email;
 
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
-        String out = facebookConnection.getOut();
-        String email = facebookConnection.getEmail();
+
 //    ********* array list of users**************
         Criteria c = userNamelist();
         c.add(Restrictions.like("userid", "%" + id + "%"));

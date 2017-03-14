@@ -13,7 +13,7 @@ import java.net.URLConnection;
 public class FBConnection implements FBLogin{
     public static final String FB_APP_ID = FBLogin.FB_APP_ID;
     public static final String FB_APP_SECRET = FBLogin.FB_APP_SECRET;
-    public static final String REDIRECT_URI = "http://localhost:8080/habits";
+    public static final String REDIRECT_URI = "http://localhost:8080/getPermission";
 
     static String accessToken = "";
 
