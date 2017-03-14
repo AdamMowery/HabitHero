@@ -36,7 +36,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping("mainPage")
+    @RequestMapping("habits")
 
     public ModelAndView welcome(@RequestParam("code") String code, Model model) {
 
