@@ -82,15 +82,16 @@ public class HomeController {
 
     @RequestMapping("addTask")
 
-    public ModelAndView addTask(@RequestParam("code") String code,
+    public ModelAndView addTask(FacebookConnection connect,
                                 @RequestParam("task") String taskId,
                                 Model model) {
+        String id = connect.id;
+        String code = connect.code;
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
+
         Criteria c = tasks();
         c.add(Restrictions.like("userID", "%" + id + "%"));
         c.add(Restrictions.like("taskID", "%" + taskId + "%"));
@@ -139,19 +140,19 @@ public class HomeController {
 
     @RequestMapping("leaderboard")
 
-    public ModelAndView leading(@RequestParam("code") String code) {
+    public ModelAndView leading(FacebookConnection connect) {
+        String code = connect.code;
+        String id = connect.id;
+        String name = connect.out;
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
-        String out = facebookConnection.getOut();
 
         // todo add points for all friends of this user
 
         return new
-                ModelAndView("leaderboard", "message", out);
+                ModelAndView("leaderboard", "message", name);
 
     }
 
@@ -194,6 +195,14 @@ public class HomeController {
         private String email;
 
         public FacebookConnection(String code) {
+            this.code = code;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
             this.code = code;
         }
 
