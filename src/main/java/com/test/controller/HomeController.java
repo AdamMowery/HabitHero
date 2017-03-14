@@ -32,10 +32,6 @@ public class HomeController {
 
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a81409197e5ee552e33569e2d1499ea23a4dda8b
     @RequestMapping("habits")
 
     public ModelAndView welcome(@RequestParam("code") String code, Model model) {

@@ -19,7 +19,7 @@ ${message}
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>Create new Habit</h2>
-                <h3>Add a new habit here.  </h3>
+                <h3>Add a new habit here. </h3>
                 <hr class="star-primary">
             </div>
         </div>
@@ -29,8 +29,15 @@ ${message}
                 <form name="sentMessage" id="contactForm" novalidate>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="name">Enter new habit here. </label>
-                            <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
+                            <label for="newtask">Enter new habit here. </label>
+                            <form action="addTask" method="post">
+
+
+                            <input type="text" class="form-control" placeholder="New Task" id="newtask">
+                                <input type="submit" value="post">
+
+                                <!-- <button type="submit" class="btn btn-success btn-lg">ADD</button> -->
+                            </form>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
@@ -39,13 +46,14 @@ ${message}
                     <div id="success"></div>
                     <div class="row">
                         <div class="form-group col-xs-12">
-                            <button type="submit" class="btn btn-success btn-lg">Send</button>
+
+
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <hr />
+        <hr/>
         <h3 class="text-center">
             YOUR CURRENT HABITS ARE
         </h3>
@@ -56,8 +64,8 @@ ${message}
                 <td>CURRENT STREAK</td>
                 <td>POINTS EARNED EACH ONE</td>
             </tr>
-            <hr />
-            <tr class = "text-center">
+            <hr/>
+            <tr class="text-center">
                 <td>Apply for one job today.</td>
                 <td>3 days</td>
                 <td>50</td>
