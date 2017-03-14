@@ -1,7 +1,7 @@
 package com.test.controller;
-import org.hibernate.*;
 
 
+import com.test.models.MasterfriendsEntity;
 import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
 import org.hibernate.Criteria;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-//    @RequestMapping("listCustomers")public ModelAndView listCustomer(){
+    //    @RequestMapping("listCustomers")public ModelAndView listCustomer(){
 //        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 //    SessionFactory sessionFact = cfg.buildSessionFactory();
 //    Session selectusers = sessionFact.openSession();
@@ -46,22 +46,16 @@ public class HomeController {
 
     @RequestMapping("mainPage")
 
-    public ModelAndView welcome(@RequestParam("code") String code,Model model) {
+    public ModelAndView welcome(@RequestParam("code") String code, Model model) {
 
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FBConnection fbConnection = new FBConnection();
-        String accessToken = fbConnection.getAccessToken(code);
-
-        FBGraph fbGraph = new FBGraph(accessToken);
-        String graph = fbGraph.getFBGraph();
-        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-        String out = "";
-        String id = fbProfileData.get("id");
-        out = fbProfileData.get("name");
-        String email = fbProfileData.get("email");
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+        String id = facebookConnection.getId();
+        String out = facebookConnection.getOut();
+        String email = facebookConnection.getEmail();
 //    ********* array list of users**************
         Criteria c = userNamelist();
         c.add(Restrictions.like("userid", "%" + id + "%"));
@@ -83,11 +77,12 @@ public class HomeController {
             session.close();
         }
 //   ******* Table of tasks *********
-//        Criteria t = tasks();
-//        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
-//        model.addAttribute("task", taskList);
+        Criteria t = tasks();
+        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
+        model.addAttribute("task", taskList);
 
         // Todo add friends
+
 
         return new
                 ModelAndView("mainPage", "message", out);
@@ -102,6 +97,7 @@ public class HomeController {
         selectUsers.beginTransaction();
         return selectUsers.createCriteria(UsernamesEntity.class);
     }
+
     private Criteria tasks() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFact = cfg.buildSessionFactory();
@@ -111,21 +107,17 @@ public class HomeController {
     }
 
 
-    @RequestMapping("leaderBoard")
+    @RequestMapping("leaderboard")
 
     public ModelAndView leading(@RequestParam("code") String code) {
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        FBConnection fbConnection = new FBConnection();
-        String accessToken = fbConnection.getAccessToken(code);
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+        String id = facebookConnection.getId();
+        String out = facebookConnection.getOut();
 
-        FBGraph fbGraph = new FBGraph(accessToken);
-        String graph = fbGraph.getFBGraph();
-        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-        String out = "";
-        out = out.concat("<div>Welcome " + fbProfileData.get("name"));
 
         // todo add points for all friends of this user
 
@@ -134,4 +126,72 @@ public class HomeController {
 
     }
 
+    @RequestMapping("friendFinder")
+
+    public ModelAndView searchFriends(@RequestParam("code") String code,
+                                      @RequestParam("find") String input) {
+        if (code == null || code.equals("")) {
+            throw new RuntimeException(
+                    "ERROR:you are not logged in");
+        }
+        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
+        String id = facebookConnection.getId();
+
+        Criteria c = userNamelist();
+        c.add(Restrictions.like("userid", "%" + input + "%"));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) c.list();
+        if (!(friendsList.size() == 0)) {
+            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFact = cfg.buildSessionFactory();
+            Session session = sessionFact.openSession();
+            Transaction tx = session.beginTransaction();
+            MasterfriendsEntity newfriend = new MasterfriendsEntity();
+            newfriend.setUserId(id);
+            newfriend.setFriendId(input);
+            session.save(newfriend);
+            tx.commit();
+            session.close();
+        }
+
+        return new
+                ModelAndView("addFriends", "message", "");
+
+    }
+
+    private class FacebookConnection {
+        private String code;
+        private String out;
+        private String id;
+        private String email;
+
+        public FacebookConnection(String code) {
+            this.code = code;
+        }
+
+        public String getOut() {
+            return out;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public FacebookConnection invoke() {
+            FBConnection fbConnection = new FBConnection();
+            String accessToken = fbConnection.getAccessToken(code);
+
+            FBGraph fbGraph = new FBGraph(accessToken);
+            String graph = fbGraph.getFBGraph();
+            Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+            out = "";
+            id = fbProfileData.get("id");
+            out = fbProfileData.get("name");
+            email = fbProfileData.get("email");
+            return this;
+        }
+    }
 }
