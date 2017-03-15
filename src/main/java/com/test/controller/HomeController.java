@@ -46,7 +46,7 @@ public class HomeController {
 //        }
 
     @RequestMapping("bullShitScreen")
-    public ModelAndView welcome(@RequestParam("code") String code, Model model) {
+    public ModelAndView welcome(@RequestParam("code") String code) {
         FacebookConnection facebookConnection = new FacebookConnection(code);
         facebookConnection.invoke();
         info.add(code);

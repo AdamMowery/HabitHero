@@ -84,7 +84,7 @@ ${message}
             <c:forEach var="task" items="${task}">
                 <tr>
                     <td></td>
-                    <td>${task}</td>
+                    <td>${task.getTask}</td>
 
                 </tr>
             </c:forEach>

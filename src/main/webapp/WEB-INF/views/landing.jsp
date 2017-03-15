@@ -86,11 +86,11 @@
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        LOGIN
+                    <a href="${message}" class="btn btn-lg btn-outline">
+                        Login/Sign up!
                     </a>
                 </div>
-                <div id="wrapper">  <a href="${message}">Login/Sign up!</a> </div>
+                <div id="wrapper"> 
                  
             </div>
         </div>

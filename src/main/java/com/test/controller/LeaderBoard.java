@@ -5,6 +5,7 @@ package com.test.controller;
  */
 public class LeaderBoard {
 
+<<<<<<< HEAD
 
 
 /**
@@ -45,6 +46,8 @@ public class LeaderBoard {
     }
 **/
 
+=======
+>>>>>>> 1b41dfa759b475654a8a71bf3e6506cb11940d53
 
 
 }
