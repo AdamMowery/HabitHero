@@ -5,7 +5,7 @@ package com.test.controller;
  */
 public class LeaderBoard {
 
-<<<<<<< HEAD
+
 
 /**
 >>>>>>> b6647390569e2f0be3cf3d63f5967f073e121ebe
@@ -35,7 +35,7 @@ public class LeaderBoard {
         -    }
 +
 
-<<<<<<< HEAD
+
 
 =======
     {
@@ -44,8 +44,7 @@ public class LeaderBoard {
         System.out.println(product.getName() + " - " + category.getName());
     }
 **/
-=======
->>>>>>> 6afd567fe83c619c7e717ad364d17b068c57412c
+
 
 
 }
