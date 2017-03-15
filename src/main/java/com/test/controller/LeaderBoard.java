@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class LeaderBoard {
 
+
     public ArrayList<UsernamesEntity> leaderBoard(ArrayList<String> info) {
         /*
         * 1. hql query1 that returns all friends for a given user
@@ -46,6 +47,7 @@ public class LeaderBoard {
         return userfriends;
 
     }
+
 
 
 }

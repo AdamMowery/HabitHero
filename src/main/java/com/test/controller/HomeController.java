@@ -208,6 +208,8 @@ public class HomeController {
             session.close();
         }
 
+
+
         return new
                 ModelAndView("addFriends", "message", "");
 
