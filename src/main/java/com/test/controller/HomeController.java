@@ -21,6 +21,7 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
+    ArrayList<String> info = new ArrayList<String>();
 
     @RequestMapping("/")
 
@@ -31,24 +32,37 @@ public class HomeController {
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
 
     }
-    @RequestMapping("getPermission")
+//        @RequestMapping("getPermission")
+//
+//        public ModelAndView permission(@RequestParam("code") String code,Model model){
+//            FacebookConnection facebookConnection = new FacebookConnection(code);
+//            facebookConnection.invoke();
+//            String redirectURL = "habits";
+//
+//
+//            return new
+//                    ModelAndView(redirectURL,"message","");
+//
+//        }
 
-    public ModelAndView permission(@RequestParam("code") String code) {
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-
+    @RequestMapping("bullShitScreen")
+    public ModelAndView welcome(@RequestParam("code") String code, Model model) {
+        FacebookConnection facebookConnection = new FacebookConnection(code);
+        facebookConnection.invoke();
+        info.add(code);
+        info.add(facebookConnection.getId());
+        info.add(facebookConnection.getOut());
+        info.add(facebookConnection.getEmail());
         return new
-                ModelAndView("habits", "message", facebookConnection);
-
+                ModelAndView("bullShitScreen", "message", "");
     }
-
 
     @RequestMapping("habits")
 
-    public ModelAndView welcome(FacebookConnection connect, Model model) {
-        String code = connect.code;
-        String id = connect.id;
-        String out = connect.out;
-        String email = connect.email;
+    public ModelAndView welcome(Model model) {
+
+        String code = info.get(0);
+
 
         if (code == null || code.equals("")) {
             throw new RuntimeException(
@@ -57,7 +71,7 @@ public class HomeController {
 
 //    ********* array list of users**************
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userid", "%" + id + "%"));
+        c.add(Restrictions.like("userid", "%" + info.get(1) + "%"));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
 //  *********** add user to database if not already there ******
@@ -67,9 +81,9 @@ public class HomeController {
             Session session = sessionFact.openSession();
             Transaction tx = session.beginTransaction();
             UsernamesEntity newuser = new UsernamesEntity();
-            newuser.setUserid(id);
-            newuser.setFullname(out);
-            newuser.setEmail(email);
+            newuser.setUserid(info.get(1));
+            newuser.setFullname(info.get(2));
+            newuser.setEmail(info.get(3));
             newuser.setPoints("0");
             session.save(newuser);
             tx.commit();
@@ -77,27 +91,25 @@ public class HomeController {
         }
 //   ******* Table of tasks *********
         Criteria t = tasks();
-        t.add(Restrictions.like("userId", "%" + id + "%"));
+        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("task", taskList);
 //   ******* Table of friends *******
         Criteria f = friends();
-        f.add(Restrictions.like("userId", "%" + id + "%"));
+        f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         model.addAttribute("friends", friendsList);
 
         return new
-                ModelAndView("habits", "message", "your id: " + id);
+                ModelAndView("habits", "message", "your id: " + info.get(1));
 
     }
 
     @RequestMapping("addTask")
 
-    public ModelAndView addTask(FacebookConnection connect,
-                                @RequestParam("task") String taskId,
-                                Model model) {
-        String id = connect.id;
-        String code = connect.code;
+    public ModelAndView addTask(@RequestParam("task") String taskId, Model model) {
+        String id = info.get(1);
+        String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
@@ -115,7 +127,7 @@ public class HomeController {
             Session session = sessionFact.openSession();
             Transaction tx = session.beginTransaction();
             TasksEntity newTask = new TasksEntity();
-            newTask.setUserId(taskId);
+            newTask.setUserId(id);
             session.save(newTask);
             tx.commit();
             session.close();
@@ -199,7 +211,7 @@ public class HomeController {
 
     }
 
-    private class FacebookConnection {
+    static class FacebookConnection {
         private String code;
         private String out;
         private String id;
@@ -232,14 +244,14 @@ public class HomeController {
         public FacebookConnection invoke() {
             FBConnection fbConnection = new FBConnection();
             String accessToken = fbConnection.getAccessToken(code);
-
             FBGraph fbGraph = new FBGraph(accessToken);
             String graph = fbGraph.getFBGraph();
             Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-            out = "";
+
             id = fbProfileData.get("id");
             out = fbProfileData.get("name");
             email = fbProfileData.get("email");
+
             return this;
         }
     }

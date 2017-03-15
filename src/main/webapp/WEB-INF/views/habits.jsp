@@ -61,31 +61,12 @@ ${message}
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
 
-                <form name="sentMessage" id="contactForm" novalidate>
-                    <div class="row control-group">
-                        <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="task">Enter new habit here. </label>
-                            <form action="addTask" method="post">
+                <form action="addTask" method="post">
 
-
-                            <input type="text" class="form-control" placeholder="New Task" id="task">
-                                <input type="submit" value="post">
-
-                                <!-- <button type="submit" class="btn btn-success btn-lg">ADD</button> -->
-                            </form>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
-
-                    <br>
-                    <div id="success"></div>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-
-
-                        </div>
-                    </div>
+                    Enter a new task<input type="text" name="task">
+                    <input type="submit" value="Add">
                 </form>
+
             </div>
         </div>
         <hr/>
