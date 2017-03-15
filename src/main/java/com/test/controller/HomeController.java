@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 import java.util.Map;
@@ -46,7 +47,14 @@ public class HomeController {
 //        }
 
     @RequestMapping("bullShitScreen")
-    public ModelAndView welcome(@RequestParam("code") String code) {
+    public ModelAndView welcome(@RequestParam("code") String code, HttpSession session) {
+        if (session.getAttribute("counter") == null) {
+            session.setAttribute("counter", 0);
+        }
+        Integer c = (Integer) session.getAttribute("counter");
+        c++;
+        // cast object session to the type we want to return
+        session.setAttribute("counter",c);
         FacebookConnection facebookConnection = new FacebookConnection(code);
         facebookConnection.invoke();
         info.add(code);
@@ -93,15 +101,17 @@ public class HomeController {
         Criteria t = tasks();
         t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
-        model.addAttribute("task", taskList);
+        model.addAttribute("tasks", taskList);
 //   ******* Table of friends *******
         Criteria f = friends();
         f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+
+
         model.addAttribute("friends", friendsList);
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1));
+                ModelAndView("habits", "message", "your id: " + taskList);
 
     }
 
@@ -133,7 +143,10 @@ public class HomeController {
             tx.commit();
             session.close();
         }
-        model.addAttribute("task", taskList);
+        Criteria t = tasks();
+        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
+        model.addAttribute("tasks", newtaskList);
         return new
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
@@ -173,7 +186,7 @@ public class HomeController {
                     "ERROR:Didn't get code parameter in callback.");
         }
 
-        // todo add points for all friends of this user
+        
 
         return new
                 ModelAndView("leaderboard", "message", name);
