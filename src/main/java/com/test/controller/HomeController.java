@@ -54,7 +54,7 @@ public class HomeController {
         info.add(facebookConnection.getOut());
         info.add(facebookConnection.getEmail());
         return new
-                ModelAndView("bullShitScreen", "message", "go fuck yourself");
+                ModelAndView("bullShitScreen", "message", "");
     }
 
     @RequestMapping("habits")
