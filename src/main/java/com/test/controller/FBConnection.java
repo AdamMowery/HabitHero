@@ -10,10 +10,10 @@ import java.net.URLConnection;
 /**
  * Created by adamm on 3/13/2017.
  */
-public class FBConnection implements FBLogin{
+public class FBConnection implements FBLogin {
     public static final String FB_APP_ID = FBLogin.FB_APP_ID;
     public static final String FB_APP_SECRET = FBLogin.FB_APP_SECRET;
-    public static final String REDIRECT_URI = "http://localhost:8080/getPermission";
+    public static final String REDIRECT_URI = "http://localhost:8080/bullShitScreen";
 
     static String accessToken = "";
 

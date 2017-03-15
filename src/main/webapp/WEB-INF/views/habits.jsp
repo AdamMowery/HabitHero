@@ -64,28 +64,16 @@ ${message}
                 <form name="sentMessage" id="contactForm" novalidate>
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="task">Enter new habit here. </label>
+                            <label >Enter new habit here. </label>
                             <form action="addTask" method="post">
 
 
-                            <input type="text" class="form-control" placeholder="New Task" id="task">
-                                <input type="submit" value="post">
+                            <input type="text" class="form-control" placeholder="New Task"  name="task">
+                                <input type="submit" value="add">
 
                                 <!-- <button type="submit" class="btn btn-success btn-lg">ADD</button> -->
                             </form>
-                            <p class="help-block text-danger"></p>
-                        </div>
-                    </div>
 
-                    <br>
-                    <div id="success"></div>
-                    <div class="row">
-                        <div class="form-group col-xs-12">
-
-
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
         <hr/>
