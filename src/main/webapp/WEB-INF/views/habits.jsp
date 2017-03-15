@@ -74,18 +74,20 @@ ${message}
             YOUR CURRENT HABITS ARE
         </h3>
         <hr class="star-primary">
-        <table style="width:100%">
-            <tr class="text-center">
-                <td>HABITS</td>
-                <td>CURRENT STREAK</td>
-                <td>POINTS EARNED EACH ONE</td>
+        <table border="1">
+
+            <tr>
+                <th>name</th>
+                <th>task</th>
+                <th>Delete</th>
             </tr>
-            <hr/>
-            <tr class="text-center">
-                <td>Apply for one job today.</td>
-                <td>3 days</td>
-                <td>50</td>
-            </tr>
+            <c:forEach var="task" items="${task}">
+                <tr>
+                    <td></td>
+                    <td>${task}</td>
+
+                </tr>
+            </c:forEach>
 
         </table>
     </div>

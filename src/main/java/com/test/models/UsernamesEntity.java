@@ -3,7 +3,7 @@ package com.test.models;
 import javax.persistence.*;
 
 /**
- * Created by adamm on 3/14/2017.
+ * Created by adamm on 3/15/2017.
  */
 @Entity
 @Table(name = "usernames", schema = "Habitz", catalog = "")
@@ -11,17 +11,7 @@ public class UsernamesEntity {
     private String fullname;
     private String email;
     private String points;
-    private String userid;
-
-    @Id
-    @Column(name = "userid", nullable = false, length = 20)
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
+    private String userId;
 
     @Basic
     @Column(name = "fullname", nullable = true, length = 40)
@@ -53,7 +43,15 @@ public class UsernamesEntity {
         this.points = points;
     }
 
+    @Id
+    @Column(name = "userID", nullable = false, length = 20)
+    public String getUserId() {
+        return userId;
+    }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -61,22 +59,21 @@ public class UsernamesEntity {
         if (o == null || getClass() != o.getClass()) return false;
 
         UsernamesEntity that = (UsernamesEntity) o;
-        if (userid != null ? !userid.equals(that.userid) : that.userid != null) return false;
+
         if (fullname != null ? !fullname.equals(that.fullname) : that.fullname != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (points != null ? !points.equals(that.points) : that.points != null) return false;
-
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userid != null ? userid.hashCode() : 0;
-        result = 31 * result + (fullname != null ? fullname.hashCode() : 0);
+        int result = fullname != null ? fullname.hashCode() : 0;
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (points != null ? points.hashCode() : 0);
-
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
 }

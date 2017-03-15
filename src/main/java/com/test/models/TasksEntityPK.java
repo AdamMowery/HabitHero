@@ -1,19 +1,18 @@
 package com.test.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by adamm on 3/15/2017.
  */
-@Entity
-@Table(name = "masterfriends", schema = "Habitz", catalog = "")
-@IdClass(MasterfriendsEntityPK.class)
-public class MasterfriendsEntity {
+public class TasksEntityPK implements Serializable {
     private String userId;
-    private String friendId;
+    private String taskId;
 
-    @Id
     @Column(name = "userID", nullable = false, length = 20)
+    @Id
     public String getUserId() {
         return userId;
     }
@@ -22,14 +21,14 @@ public class MasterfriendsEntity {
         this.userId = userId;
     }
 
+    @Column(name = "taskID", nullable = false, length = 45)
     @Id
-    @Column(name = "friendID", nullable = false, length = 45)
-    public String getFriendId() {
-        return friendId;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setFriendId(String friendId) {
-        this.friendId = friendId;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     @Override
@@ -37,10 +36,10 @@ public class MasterfriendsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MasterfriendsEntity that = (MasterfriendsEntity) o;
+        TasksEntityPK that = (TasksEntityPK) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (friendId != null ? !friendId.equals(that.friendId) : that.friendId != null) return false;
+        if (taskId != null ? !taskId.equals(that.taskId) : that.taskId != null) return false;
 
         return true;
     }
@@ -48,7 +47,7 @@ public class MasterfriendsEntity {
     @Override
     public int hashCode() {
         int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (friendId != null ? friendId.hashCode() : 0);
+        result = 31 * result + (taskId != null ? taskId.hashCode() : 0);
         return result;
     }
 }

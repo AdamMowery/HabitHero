@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by adamm on 3/14/2017.
+ * Created by adamm on 3/15/2017.
  */
 public class MasterfriendsEntityPK implements Serializable {
     private String userId;

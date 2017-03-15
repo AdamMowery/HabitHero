@@ -71,7 +71,7 @@ public class HomeController {
 
 //    ********* array list of users**************
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userid", "%" + info.get(1) + "%"));
+        c.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
 //  *********** add user to database if not already there ******
@@ -81,7 +81,7 @@ public class HomeController {
             Session session = sessionFact.openSession();
             Transaction tx = session.beginTransaction();
             UsernamesEntity newuser = new UsernamesEntity();
-            newuser.setUserid(info.get(1));
+            newuser.setUserId(info.get(1));
             newuser.setFullname(info.get(2));
             newuser.setEmail(info.get(3));
             newuser.setPoints("0");
@@ -108,7 +108,7 @@ public class HomeController {
     @RequestMapping("addTask")
 
     public ModelAndView addTask(@RequestParam("task") String taskId, Model model) {
-        String id = info.get(1);
+        String userId = info.get(1);
         String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
@@ -116,8 +116,8 @@ public class HomeController {
         }
 
         Criteria c = tasks();
-        c.add(Restrictions.like("userID", "%" + id + "%"));
-        c.add(Restrictions.like("taskID", "%" + taskId + "%"));
+        c.add(Restrictions.like("userId", "%" + userId + "%"));
+        c.add(Restrictions.like("taskId", "%" + taskId + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
 //  *********** add task to database if not already there ******
@@ -127,14 +127,15 @@ public class HomeController {
             Session session = sessionFact.openSession();
             Transaction tx = session.beginTransaction();
             TasksEntity newTask = new TasksEntity();
-            newTask.setUserId(id);
+            newTask.setUserId(userId);
+            newTask.setTaskId(taskId);
             session.save(newTask);
             tx.commit();
             session.close();
         }
         model.addAttribute("task", taskList);
         return new
-                ModelAndView("habits", "message", "Your id: " + id);
+                ModelAndView("habits", "message", "Your id: " + userId);
     }
 
     private Criteria userNamelist() {

@@ -3,15 +3,16 @@ package com.test.models;
 import javax.persistence.*;
 
 /**
- * Created by adamm on 3/14/2017.
+ * Created by adamm on 3/15/2017.
  */
 @Entity
 @Table(name = "tasks", schema = "Habitz", catalog = "")
+@IdClass(TasksEntityPK.class)
 public class TasksEntity {
     private String userId;
     private String taskId;
 
-    @Basic
+    @Id
     @Column(name = "userID", nullable = false, length = 20)
     public String getUserId() {
         return userId;
