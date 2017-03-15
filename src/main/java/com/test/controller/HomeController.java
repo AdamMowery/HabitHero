@@ -179,10 +179,11 @@ public class HomeController {
 
     }
 
-    @RequestMapping("friendFinder")
+    @RequestMapping("addFriends")
 
     public ModelAndView searchFriends(@RequestParam("code") String code,
                                       @RequestParam("find") String input) {
+
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:you are not logged in");
@@ -255,4 +256,8 @@ public class HomeController {
             return this;
         }
     }
+
+
+
+
 }

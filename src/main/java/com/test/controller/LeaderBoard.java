@@ -5,7 +5,7 @@ package com.test.controller;
  */
 public class LeaderBoard {
 
-<<<<<<< HEAD
+
 /**
 >>>>>>> b6647390569e2f0be3cf3d63f5967f073e121ebe
     /// example A of an inner join
@@ -43,8 +43,6 @@ public class LeaderBoard {
         System.out.println(product.getName() + " - " + category.getName());
     }
 **/
-=======
 
->>>>>>> d947dbf28e08a29bb63516a3d3ccc771c612da62
 
 }

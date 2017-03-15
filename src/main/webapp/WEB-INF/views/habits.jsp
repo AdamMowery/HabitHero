@@ -32,7 +32,7 @@ ${message}
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="addfriends">Add Friends</a>
+                    <a href="addFriends">Add Friends</a>
                 </li>
 
                 <li class="page-scroll">
