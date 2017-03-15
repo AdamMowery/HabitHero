@@ -5,11 +5,13 @@
 <hibernate-mapping>
 
     <class name="com.test.models.TasksEntity" table="tasks" schema="Habitz">
-        <id name="taskId">
-            <column name="taskID" sql-type="varchar(45)" length="45"/>
-        </id>
-        <property name="userId">
-            <column name="userID" sql-type="varchar(20)" length="20"/>
-        </property>
+        <composite-id mapped="true" class="com.test.models.TasksEntityPK">
+            <key-property name="userId">
+                <column name="userID" sql-type="varchar(20)" length="20"/>
+            </key-property>
+            <key-property name="taskId">
+                <column name="taskID" sql-type="varchar(45)" length="45"/>
+            </key-property>
+        </composite-id>
     </class>
 </hibernate-mapping>
