@@ -277,19 +277,21 @@ public class HomeController {
         f.add(Restrictions.like("userId", "%" + id + "%"));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         if (friendsList.size() == 0 && userList.size() == 1) {
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
+            if (!id.equals(info.get(1))) {
+                Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+                SessionFactory sessionFact = cfg.buildSessionFactory();
+                Session session = sessionFact.openSession();
+                Transaction tx = session.beginTransaction();
 
-            MasterfriendsEntity newfriend = new MasterfriendsEntity();
-            newfriend.setUserId(info.get(1));
-            newfriend.setFriendId(id);
+                MasterfriendsEntity newfriend = new MasterfriendsEntity();
+                newfriend.setUserId(info.get(1));
+                newfriend.setFriendId(id);
 
-            //this saves the object into the database, writes to DB, C in Crud for CREATE
-            session.save(newfriend);
-            tx.commit();
-            session.close();
+                //this saves the object into the database, writes to DB, C in Crud for CREATE
+                session.save(newfriend);
+                tx.commit();
+                session.close();
+            }
         }
 
         return new
