@@ -59,24 +59,6 @@ ${message}
                 </tr>
             </c:forEach>
 
-        </table>
-        <table border="1">
-
-            <tr>
-
-                <th>friend id</th>
-                <th>friend name</th>
-            </tr>
-            <c:forEach var="friend" items="${friends}">
-                <tr>
-                    <td></td>
-                    <td>${friend.userId}</td>
-
-
-                </tr>
-            </c:forEach>
-
-        </table>
     </div>
 </section>
 

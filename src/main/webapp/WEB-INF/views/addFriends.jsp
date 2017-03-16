@@ -6,6 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Title</title>
@@ -54,7 +57,6 @@ ${message}
 <section id="addfriends">
     <div class="container row col-lg-12 text-center">
         <h2>FIND FRIENDS</h2>
-        <h3>Congrats! You have no friends. Add friends to compete with here </h3>
         <hr class="star-primary">
     </div>
 </section>
@@ -67,6 +69,24 @@ ${message}
 
 
 </form>
+</table>
+<table border="1">
+
+    <tr>
+
+        <th>friend name</th>
+        <th>friend points</th>
+    </tr>
+    <c:forEach var="friend" items="${friends}">
+        <tr>
+            <td>${friend.fullname}</td>
+            <td>${friend.points}</td>
+
+
+        </tr>
+    </c:forEach>
+
+</table>
 
 
 

@@ -33,18 +33,7 @@ public class HomeController {
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
 
     }
-//        @RequestMapping("getPermission")
-//
-//        public ModelAndView permission(@RequestParam("code") String code,Model model){
-//            FacebookConnection facebookConnection = new FacebookConnection(code);
-//            facebookConnection.invoke();
-//            String redirectURL = "habits";
-//
-//
-//            return new
-//                    ModelAndView(redirectURL,"message","");
-//
-//        }
+
 
     @RequestMapping("bullShitScreen")
     public ModelAndView welcome(@RequestParam("code") String code) {
@@ -100,12 +89,8 @@ public class HomeController {
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", taskList);
-//   ******* Table of friends *******
-        Criteria f = friends();
-        f.add(Restrictions.eq("userId", info.get(1)));
-        //this adds the f.list table from database to a new arraylist
-        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
-        model.addAttribute("friends", friendsList);
+
+
 
         return new
                 ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints());
@@ -233,7 +218,7 @@ public class HomeController {
 //        userFriends = leaders.leaderBoard(info);
 
         Criteria f = friends();
-        f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        f.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         ArrayList<String> userFriends = new ArrayList<>();
         //search for friends for a given userId
@@ -260,9 +245,24 @@ public class HomeController {
 
     @RequestMapping("addfriends")
     public ModelAndView addFriendsPage() {
+        Criteria f = friends();
+        f.add(Restrictions.eq("userId", info.get(1)));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        ArrayList<String> userFriends = new ArrayList<>();
+        //search for friends for a given userId
+        for (int i = 0; i < friendsList.size(); i++) {
+            userFriends.add(friendsList.get(i).getFriendId());
+        }
+        ArrayList<UsernamesEntity> userList = new ArrayList<>();
+        //get all of the user info(points, name, id , email)
+        for (String token : userFriends) {
+            Criteria c = userNamelist();
+            c.add(Restrictions.like("userId", "%" + token + "%"));
+            userList.add((UsernamesEntity) c.list().get(0));
+        }
 
         return new
-                ModelAndView("addFriends", "message", "");
+                ModelAndView("addFriends", "friends", userList);
     }
 
     @RequestMapping("addFriendButton")
