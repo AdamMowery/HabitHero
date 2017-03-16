@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tasks", schema = "Habitz", catalog = "")
 @IdClass(TasksEntityPK.class)
-public class TasksEntity {
+public class friendsEntity {
     private String userId;
     private String taskId;
 
@@ -37,7 +37,7 @@ public class TasksEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TasksEntity that = (TasksEntity) o;
+        friendsEntity that = (friendsEntity) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (taskId != null ? !taskId.equals(that.taskId) : that.taskId != null) return false;
