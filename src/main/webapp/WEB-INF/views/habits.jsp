@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
 <head>
     <title>Habitz</title>
@@ -47,12 +49,12 @@ ${message}
             <tr>
 
                 <th>task</th>
-                <th>Delete</th>
+                <th>complete</th>
             </tr>
             <c:forEach var="task" items="${tasks}">
                 <tr>
-                    <td></td>
                     <td>${task.taskId}</td>
+                    <td><a href="complete?taskId=${task.taskId}"> Complete </a></td>
 
                 </tr>
             </c:forEach>

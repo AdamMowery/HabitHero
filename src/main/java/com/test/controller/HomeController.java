@@ -3,10 +3,7 @@ package com.test.controller;
 import com.test.models.MasterfriendsEntity;
 import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 
@@ -58,6 +55,7 @@ public class HomeController {
         info.add(facebookConnection.getId());
         info.add(facebookConnection.getOut());
         info.add(facebookConnection.getEmail());
+
         return new
                 ModelAndView("bullShitScreen", "message", "");
     }
@@ -98,20 +96,19 @@ public class HomeController {
 //   ******* Table of tasks *********
         //tasks is  a methods to connect to the database
         Criteria t = tasks();
-        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        t.add(Restrictions.eq("userId", info.get(1)));
+        t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", taskList);
 //   ******* Table of friends *******
         Criteria f = friends();
-        f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        f.add(Restrictions.eq("userId", info.get(1)));
         //this adds the f.list table from database to a new arraylist
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
-
-
         model.addAttribute("friends", friendsList);
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1));
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints());
 
     }
 
@@ -153,27 +150,74 @@ public class HomeController {
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
 
+    @RequestMapping("complete")
+    public ModelAndView completedTask(@RequestParam("taskId") String id, Model model) {
+        Criteria t = tasks();
+        t.add(Restrictions.eq("userId", info.get(1)));
+        t.add(Restrictions.eq("taskId", id));
+        ArrayList<TasksEntity> completedTask = (ArrayList<TasksEntity>) t.list();
+
+        Criteria c = userNamelist();
+        c.add(Restrictions.eq("userId", info.get(1)));
+        ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
+
+
+        if (completedTask.size() == 1) {
+            completedTask.get(0).setCompleted(1);
+            int points = userList.get(0).getPoints();
+            userList.get(0).setPoints(points+5);
+
+            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFact = cfg.buildSessionFactory();
+            Session session = sessionFact.openSession();
+            Transaction tx = session.beginTransaction();
+            session.update(userList.get(0));
+            tx.commit();
+            session.close();
+
+            Configuration cf = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFac = cf.buildSessionFactory();
+            Session sessio = sessionFac.openSession();
+            Transaction tc = sessio.beginTransaction();
+            sessio.update(completedTask.get(0));
+            tc.commit();
+            sessio.close();
+        }
+
+
+
+
+        Criteria u = tasks();
+        u.add(Restrictions.eq("userId", info.get(1)));
+        u.add(Restrictions.eq("completed", 0));
+        ArrayList<TasksEntity> unfinishedTasks = (ArrayList<TasksEntity>) u.list();
+        model.addAttribute("tasks",unfinishedTasks);
+
+        return new
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints()  );
+
+    }
+
     private Criteria userNamelist() {
+        Session selectUsers = getSession();
+        return selectUsers.createCriteria(UsernamesEntity.class);
+    }
+
+    private Session getSession() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFact = cfg.buildSessionFactory();
         Session selectUsers = sessionFact.openSession();
         selectUsers.beginTransaction();
-        return selectUsers.createCriteria(UsernamesEntity.class);
+        return selectUsers;
     }
 
     private Criteria tasks() {
-        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-        SessionFactory sessionFact = cfg.buildSessionFactory();
-        Session selectTask = sessionFact.openSession();
-        selectTask.beginTransaction();
+        Session selectTask = getSession();
         return selectTask.createCriteria(TasksEntity.class);
     }
 
     private Criteria friends() {
-        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-        SessionFactory sessionFact = cfg.buildSessionFactory();
-        Session selectTask = sessionFact.openSession();
-        selectTask.beginTransaction();
+        Session selectTask = getSession();
         return selectTask.createCriteria(MasterfriendsEntity.class);
     }
 
@@ -242,7 +286,6 @@ public class HomeController {
         }
 
 
-
         return new
                 ModelAndView("addFriends", "message", "");
 
@@ -292,8 +335,6 @@ public class HomeController {
             return this;
         }
     }
-
-
 
 
 }
