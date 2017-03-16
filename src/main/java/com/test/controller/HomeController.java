@@ -165,7 +165,7 @@ public class HomeController {
         if (completedTask.size() == 1) {
             completedTask.get(0).setCompleted(1);
             int points = userList.get(0).getPoints();
-            userList.get(0).setPoints(points+5);
+            userList.get(0).setPoints(points + 5);
 
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
@@ -185,16 +185,14 @@ public class HomeController {
         }
 
 
-
-
         Criteria u = tasks();
         u.add(Restrictions.eq("userId", info.get(1)));
         u.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> unfinishedTasks = (ArrayList<TasksEntity>) u.list();
-        model.addAttribute("tasks",unfinishedTasks);
+        model.addAttribute("tasks", unfinishedTasks);
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints()  );
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints());
 
     }
 
@@ -269,12 +267,14 @@ public class HomeController {
 
     @RequestMapping("addFriendButton")
     public ModelAndView addFriendButton(@RequestParam("userid") String id) {
-
-
-        Criteria c = friends();
+        Criteria c = userNamelist();
         c.add(Restrictions.like("userId", "%" + id + "%"));
-        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) c.list();
-        if (friendsList.size() == 1) {
+        ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
+
+        Criteria f = friends();
+        f.add(Restrictions.like("userId", "%" + id + "%"));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        if (friendsList.size() == 0 && userList.size() == 1) {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
             Session session = sessionFact.openSession();
@@ -296,51 +296,50 @@ public class HomeController {
     }
 
 
+    static class FacebookConnection {
+        private String code;
+        private String out;
+        private String id;
+        private String email;
 
-static class FacebookConnection {
-    private String code;
-    private String out;
-    private String id;
-    private String email;
+        public FacebookConnection(String code) {
+            this.code = code;
+        }
 
-    public FacebookConnection(String code) {
-        this.code = code;
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getOut() {
+            return out;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public FacebookConnection invoke() {
+            FBConnection fbConnection = new FBConnection();
+            String accessToken = fbConnection.getAccessToken(code);
+            FBGraph fbGraph = new FBGraph(accessToken);
+            String graph = fbGraph.getFBGraph();
+            Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+
+            id = fbProfileData.get("id");
+            out = fbProfileData.get("name");
+            email = fbProfileData.get("email");
+
+            return this;
+        }
     }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getOut() {
-        return out;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public FacebookConnection invoke() {
-        FBConnection fbConnection = new FBConnection();
-        String accessToken = fbConnection.getAccessToken(code);
-        FBGraph fbGraph = new FBGraph(accessToken);
-        String graph = fbGraph.getFBGraph();
-        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-
-        id = fbProfileData.get("id");
-        out = fbProfileData.get("name");
-        email = fbProfileData.get("email");
-
-        return this;
-    }
-}
 
 
 }
