@@ -214,84 +214,64 @@ public class HomeController {
     }
 
     @RequestMapping("addFriends")
-
-    public ModelAndView searchFriends(@RequestParam("code") String code,
-                                      @RequestParam("find") String input) {
-
-        if (code == null || code.equals("")) {
-            throw new RuntimeException(
-                    "ERROR:you are not logged in");
-        }
-        FacebookConnection facebookConnection = new FacebookConnection(code).invoke();
-        String id = facebookConnection.getId();
-
-        Criteria c = userNamelist();
-        c.add(Restrictions.like("userid", "%" + input + "%"));
-        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) c.list();
-        if (!(friendsList.size() == 0)) {
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
-            MasterfriendsEntity newfriend = new MasterfriendsEntity();
-            newfriend.setUserId(id);
-            newfriend.setFriendId(input);
-            session.save(newfriend);
-            tx.commit();
-            session.close();
-        }
+    public ModelAndView addFriend() {
 
 
-
+        AddFriend user = new AddFriend();
+        user.
         return new
-                ModelAndView("addFriends", "message", "");
+                ModelAndView("leaderboard", "message", userList);
 
     }
 
-    static class FacebookConnection {
-        private String code;
-        private String out;
-        private String id;
-        private String email;
 
-        public FacebookConnection(String code) {
-            this.code = code;
-        }
 
-        public String getCode() {
-            return code;
-        }
 
-        public void setCode(String code) {
-            this.code = code;
-        }
 
-        public String getOut() {
-            return out;
-        }
+static class FacebookConnection {
+    private String code;
+    private String out;
+    private String id;
+    private String email;
 
-        public String getId() {
-            return id;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public FacebookConnection invoke() {
-            FBConnection fbConnection = new FBConnection();
-            String accessToken = fbConnection.getAccessToken(code);
-            FBGraph fbGraph = new FBGraph(accessToken);
-            String graph = fbGraph.getFBGraph();
-            Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
-
-            id = fbProfileData.get("id");
-            out = fbProfileData.get("name");
-            email = fbProfileData.get("email");
-
-            return this;
-        }
+    public FacebookConnection(String code) {
+        this.code = code;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getOut() {
+        return out;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public FacebookConnection invoke() {
+        FBConnection fbConnection = new FBConnection();
+        String accessToken = fbConnection.getAccessToken(code);
+        FBGraph fbGraph = new FBGraph(accessToken);
+        String graph = fbGraph.getFBGraph();
+        Map<String, String> fbProfileData = fbGraph.getGraphData(graph);
+
+        id = fbProfileData.get("id");
+        out = fbProfileData.get("name");
+        email = fbProfileData.get("email");
+
+        return this;
+    }
+}
 
 
 

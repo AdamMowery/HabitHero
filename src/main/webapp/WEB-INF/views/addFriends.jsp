@@ -60,13 +60,16 @@ ${message}
 </section>
 
 
-<form name="addFriendsMessage" id="addFriendForm" action="${pageContext.request.contextPath}/myservlet" method="post">
+<form  action="addfriends" method="post">
 
-    <input type="text" name="addFriendQuery" placeholder="AddFriend" id="addFriendBar">
-    <br>
-    <button type="submit" name="searchFriends" value="ADD FRIEND" onclick="(this.form.Query);"></button>
+    Add a friend<input type="text" name="userid">
+    <input type="submit" value="add">
+
 
 </form>
+
+
+
 
 <script src="${coreJs}"></script>
 <script src="${bootstrapJs}"></script>
