@@ -76,7 +76,7 @@ public class UsernamesEntity implements Comparable {
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
     }
-
+//compare to method is ran when the sort method called
     @Override
     public int compareTo(Object o) {
         UsernamesEntity name = (UsernamesEntity) o;

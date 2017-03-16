@@ -75,6 +75,7 @@ public class HomeController {
         }
 
 //    ********* array list of users**************
+        // userNamelist creates connection with the database
         Criteria c = userNamelist();
         c.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
@@ -95,6 +96,7 @@ public class HomeController {
             session.close();
         }
 //   ******* Table of tasks *********
+        //tasks is  a methods to connect to the database
         Criteria t = tasks();
         t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
@@ -102,6 +104,7 @@ public class HomeController {
 //   ******* Table of friends *******
         Criteria f = friends();
         f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        //this adds the f.list table from database to a new arraylist
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
 
 
@@ -123,6 +126,7 @@ public class HomeController {
         }
 
         Criteria c = tasks();
+        // searches for where userId and taskId match the user input
         c.add(Restrictions.like("userId", "%" + userId + "%"));
         c.add(Restrictions.like("taskId", "%" + taskId + "%"));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
@@ -140,6 +144,7 @@ public class HomeController {
             tx.commit();
             session.close();
         }
+        //displays updated task list
         Criteria t = tasks();
         t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
@@ -189,15 +194,18 @@ public class HomeController {
         f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         ArrayList<String> userFriends = new ArrayList<>();
+        //search for friends for a given userId
         for (int i = 0; i < friendsList.size(); i++) {
             userFriends.add(friendsList.get(i).getFriendId());
         }
         ArrayList<UsernamesEntity> userList = new ArrayList<>();
+        //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria c = userNamelist();
             c.add(Restrictions.like("userId", "%" + token + "%"));
             userList.add((UsernamesEntity) c.list().get(0));
         }
+        //sorts user list by points. (method is located in the UsernamesEntity class)
         Collections.sort(userList);
 
         return new
