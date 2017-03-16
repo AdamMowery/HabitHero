@@ -3,7 +3,7 @@ package com.test.models;
 import javax.persistence.*;
 
 /**
- * Created by adamm on 3/15/2017.
+ * Created by adamm on 3/16/2017.
  */
 @Entity
 @Table(name = "tasks", schema = "Habitz", catalog = "")
@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class friendsEntity {
     private String userId;
     private String taskId;
+    private int completed;
 
     @Id
     @Column(name = "userID", nullable = false, length = 20)
@@ -32,6 +33,16 @@ public class friendsEntity {
         this.taskId = taskId;
     }
 
+    @Basic
+    @Column(name = "completed", nullable = false)
+    public int getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(int completed) {
+        this.completed = completed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,6 +50,7 @@ public class friendsEntity {
 
         friendsEntity that = (friendsEntity) o;
 
+        if (completed != that.completed) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
         if (taskId != null ? !taskId.equals(that.taskId) : that.taskId != null) return false;
 
@@ -49,6 +61,7 @@ public class friendsEntity {
     public int hashCode() {
         int result = userId != null ? userId.hashCode() : 0;
         result = 31 * result + (taskId != null ? taskId.hashCode() : 0);
+        result = 31 * result + completed;
         return result;
     }
 }

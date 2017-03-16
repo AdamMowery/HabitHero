@@ -13,5 +13,8 @@
                 <column name="taskID" sql-type="varchar(45)" length="45"/>
             </key-property>
         </composite-id>
+        <property name="completed">
+            <column name="completed" sql-type="int(10) unsigned zerofill"/>
+        </property>
     </class>
 </hibernate-mapping>
