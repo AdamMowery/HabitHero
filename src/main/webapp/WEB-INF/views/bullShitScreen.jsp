@@ -14,6 +14,7 @@
 <body>
 <a href="habits">home page</a>
 <a href="addFriends">add friends</a>
+<a href="leaderboard">leader board</a>
 
 </body>
 </html>

@@ -9,15 +9,18 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
+
 import java.util.ArrayList;
 
+
+import java.util.Collections;
 import java.util.Map;
 
 @Controller
@@ -47,14 +50,8 @@ public class HomeController {
 //        }
 
     @RequestMapping("bullShitScreen")
-    public ModelAndView welcome(@RequestParam("code") String code, HttpSession session) {
-        if (session.getAttribute("counter") == null) {
-            session.setAttribute("counter", 0);
-        }
-        Integer c = (Integer) session.getAttribute("counter");
-        c++;
-        // cast object session to the type we want to return
-        session.setAttribute("counter",c);
+    public ModelAndView welcome(@RequestParam("code") String code) {
+
         FacebookConnection facebookConnection = new FacebookConnection(code);
         facebookConnection.invoke();
         info.add(code);
@@ -92,7 +89,7 @@ public class HomeController {
             newuser.setUserId(info.get(1));
             newuser.setFullname(info.get(2));
             newuser.setEmail(info.get(3));
-            newuser.setPoints("0");
+            newuser.setPoints(0);
             session.save(newuser);
             tx.commit();
             session.close();
@@ -111,7 +108,7 @@ public class HomeController {
         model.addAttribute("friends", friendsList);
 
         return new
-                ModelAndView("habits", "message", "your id: " + taskList);
+                ModelAndView("habits", "message", "your id: " + info.get(1));
 
     }
 
@@ -177,19 +174,34 @@ public class HomeController {
 
     @RequestMapping("leaderboard")
 
-    public ModelAndView leading(FacebookConnection connect) {
-        String code = connect.code;
-        String id = connect.id;
-        String name = connect.out;
+    public ModelAndView leading() {
+        String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
 
-        
+//        LeaderBoard leaders = new LeaderBoard();
+//        ArrayList<UsernamesEntity> userFriends;
+//        userFriends = leaders.leaderBoard(info);
+
+        Criteria f = friends();
+        f.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        ArrayList<String> userFriends = new ArrayList<>();
+        for (int i = 0; i < friendsList.size(); i++) {
+            userFriends.add(friendsList.get(i).getFriendId());
+        }
+        ArrayList<UsernamesEntity> userList = new ArrayList<>();
+        for (String token : userFriends) {
+            Criteria c = userNamelist();
+            c.add(Restrictions.like("userId", "%" + token + "%"));
+            userList.add((UsernamesEntity) c.list().get(0));
+        }
+        Collections.sort(userList);
 
         return new
-                ModelAndView("leaderboard", "message", name);
+                ModelAndView("leaderboard", "message", userList);
 
     }
 

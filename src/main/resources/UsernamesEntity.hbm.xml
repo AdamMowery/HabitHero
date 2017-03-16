@@ -15,7 +15,7 @@
             <column name="email" sql-type="varchar(30)" length="30" not-null="true"/>
         </property>
         <property name="points">
-            <column name="points" sql-type="varchar(20)" length="20" not-null="true"/>
+            <column name="points" sql-type="int(11)" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

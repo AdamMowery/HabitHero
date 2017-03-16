@@ -7,10 +7,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "usernames", schema = "Habitz", catalog = "")
-public class UsernamesEntity {
+public class UsernamesEntity implements Comparable {
     private String fullname;
     private String email;
-    private String points;
+    private Integer points;
     private String userId;
 
     @Basic
@@ -34,12 +34,12 @@ public class UsernamesEntity {
     }
 
     @Basic
-    @Column(name = "points", nullable = true, length = 20)
-    public String getPoints() {
+    @Column(name = "points", nullable = true)
+    public Integer getPoints() {
         return points;
     }
 
-    public void setPoints(String points) {
+    public void setPoints(Integer points) {
         this.points = points;
     }
 
@@ -75,5 +75,12 @@ public class UsernamesEntity {
         result = 31 * result + (points != null ? points.hashCode() : 0);
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        UsernamesEntity name = (UsernamesEntity) o;
+
+        return name.getPoints() - this.points;
     }
 }
