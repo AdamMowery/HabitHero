@@ -259,7 +259,7 @@ public class HomeController {
 
     //addfriends mapping
     //do something with add bar to actually add friends
-    
+
     @RequestMapping("addfriends")
     public ModelAndView addFriendsPage() {
 
@@ -267,14 +267,28 @@ public class HomeController {
                 ModelAndView("addFriends", "message", "");
     }
 
+    @RequestMapping("addFriendButton")
+    public ModelAndView addFriendButton(@RequestParam("userid") String id) {
 
 
-    public ModelAndView addFriend(@RequestParam("userid") String id) {
+        Criteria c = friends();
+        c.add(Restrictions.like("userId", "%" + id + "%"));
+        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) c.list();
+        if (friendsList.size() == 1) {
+            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFact = cfg.buildSessionFactory();
+            Session session = sessionFact.openSession();
+            Transaction tx = session.beginTransaction();
 
+            MasterfriendsEntity newfriend = new MasterfriendsEntity();
+            newfriend.setUserId(info.get(1));
+            newfriend.setFriendId(id);
 
-
-        AddFriend user = new AddFriend();
-        user.searchFriends(id,info);
+            //this saves the object into the database, writes to DB, C in Crud for CREATE
+            session.save(newfriend);
+            tx.commit();
+            session.close();
+        }
 
         return new
                 ModelAndView("addFriends", "message", "");

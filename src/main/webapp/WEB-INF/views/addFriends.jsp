@@ -60,7 +60,7 @@ ${message}
 </section>
 
 
-<form  action="addfriends" method="post">
+<form  action="addFriendButton" method="post">
 
     Add a friend<input type="text" name="userid">
     <input type="submit" value="add">
