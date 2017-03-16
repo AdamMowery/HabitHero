@@ -225,7 +225,9 @@ public class HomeController {
         for (int i = 0; i < friendsList.size(); i++) {
             userFriends.add(friendsList.get(i).getFriendId());
         }
+        userFriends.add(info.get(1));
         ArrayList<UsernamesEntity> userList = new ArrayList<>();
+
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria c = userNamelist();
