@@ -257,24 +257,30 @@ public class HomeController {
 
     }
 
-    @RequestMapping("addFriends")
-    public ModelAndView addFriend() {
+    //addfriends mapping
+    //do something with add bar to actually add friends
+    
+    @RequestMapping("addfriends")
+    public ModelAndView addFriendsPage() {
 
-
-        AddFriend user = new AddFriend();
-        user.
         return new
-                ModelAndView("leaderboard", "message", userList);
-
+                ModelAndView("addFriends", "message", "");
     }
 
 
-<<<<<<< HEAD
 
-=======
+    public ModelAndView addFriend(@RequestParam("userid") String id) {
+
+
+
+        AddFriend user = new AddFriend();
+        user.searchFriends(id,info);
+
         return new
                 ModelAndView("addFriends", "message", "");
->>>>>>> 05e71b7015bf139ca8d56fe46516594b162a63f7
+
+    }
+
 
 
 static class FacebookConnection {
