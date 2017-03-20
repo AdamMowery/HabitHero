@@ -30,7 +30,8 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    ${message}
+
+
 </head>
 
 <body id="page-top" class="index">
@@ -62,12 +63,14 @@
                 </li>
 
                 <li class="page-scroll">
-                    <a href="addfriends">ADD FRIENDS</a>
+                    <a href="about">ABOUT</a>
                 </li>
 
                 <li class="page-scroll">
-                    <a href="about">ABOUT</a>
+                    <a href="addfriends">ADD FRIENDS</a>
                 </li>
+
+
 
 
             </ul>
@@ -77,45 +80,26 @@
     <!-- /.container-fluid -->
 </nav>
 
-
-<!-- About Section -->
-<section class="success" id="leaderboard">
-    <div class="leaderboard">
+<!-- Header -->
+<header>
+    <div class="container" id="maincontent" tabindex="-1">
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2>LEADERBOARD</h2>
-                <hr class="star-light">
-            </div>
-        </div>
-        <div class="">
-            <div class="text-center">
-                <p class="text-center">LEADERBOARD </p>
-                <table border="1">
+            <div class="col-lg-12">
+                <img class="img-responsive" style="width:20em; height:20em;" src="../resources/img/portfolio/mascot1.png" alt="">
+                <br>
+                <div class="intro-text">
+                    <h1 class="name">HABIT HERO</h1>
+                    <hr class="star-light">
+                    <span class="skills">Gamifying your habits by competing with friends.</span>
+                </div>
+                <br>
 
-                    <tr>
-
-                        <th>name</th>
-                        <th>points</th>
-                    </tr>
-                    <c:forEach var="friend" items="${message}">
-                        <tr>
-                            <td>${friend.fullname}</td>
-                            <td>${friend.points}</td>
-
-
-                        </tr>
-                    </c:forEach>
-
-                </table>
-
-                <br/>
-                <br/>
+                <h4 class="skills">Congrats! You have succesfully logged in!</h4>
             </div>
 
         </div>
-
     </div>
-</section>
+</header>
 
 
 <!-- Footer -->
