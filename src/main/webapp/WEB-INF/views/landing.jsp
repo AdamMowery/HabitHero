@@ -55,7 +55,7 @@
     <div class="container"  style = "background-color: #4FA4FF" id="maincontent" tabindex="-1">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" height="300em" width="300em" src="../resources/img/superhero1.jpg" alt="">
+                <img class="img-responsive" height="300em" width="300em" src="../resources/img/portfolio/mascot1.png" alt="">
                 <div class="intro-text">
                     <h1 class="name">HABIT HERO</h1>
                     <hr class="star-light" style = "background-color: #0DB1FF" >
