@@ -80,13 +80,15 @@
     <div class="container" id="maincontent" tabindex="-1">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" src="../resources/img/profile.png" alt="">
+                <img class="img-responsive" style="width:20em; height:20em;" src="../resources/img/superhero1.jpg" alt="">
                 <div class="intro-text">
                     <h1 class="name">HABIT HERO</h1>
                     <hr class="star-light">
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
+                <br>
                 <hr class="star-light">
+                <br>
                 <span class="skills">Congrats! You have succesfully logged in!</span>
             </div>
 
