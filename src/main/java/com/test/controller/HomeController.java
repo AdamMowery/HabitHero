@@ -57,10 +57,10 @@ public class HomeController {
     @RequestMapping("aboutPreLogin")
 
     public ModelAndView aboutPageBeforeLoggingIn() {
-        FBConnection fbConnection = new FBConnection();
+        
 
         return new
-                ModelAndView("aboutPreLogin", "message", fbConnection.getFBAuthUrl());
+                ModelAndView("aboutPreLogin", "message", "");
 
     }
 
