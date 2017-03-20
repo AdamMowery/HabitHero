@@ -146,20 +146,18 @@ public class HomeController {
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
 
-    @RequestMapping("deleteTask")
+   /*@RequestMapping("deleteTask")
 
-    public ModelAndView deleteTask(@RequestParam("task") String taskId, Model model) {
+    public ModelAndView deleteTask(@RequestParam("taskId") String taskId, Model model) {
         String userId = info.get(1);
         String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
+/*
 
-        Criteria c = tasks();
-        // searches for where userId and taskId match the user input
-        c.add(Restrictions.like("userId", "%" + userId + "%"));
-        c.add(Restrictions.like("taskId", "%" + taskId + "%"));
+
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
 //  *********** add task to database if not already there ******
@@ -167,14 +165,13 @@ public class HomeController {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
             Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
+           Transaction tx = session.beginTransaction();
             TasksEntity deleteTask = new TasksEntity();
-            deleteTask.setUserId(userId);
-            deleteTask.setTaskId(taskId);
+            session.delete("taskId");
             session.save(deleteTask);
             tx.commit();
             session.close();
-        }
+
         //displays updated task list
         Criteria t = tasks();
         t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
@@ -182,6 +179,39 @@ public class HomeController {
         model.addAttribute("tasks", newtaskList);
         return new
                 ModelAndView("habits", "message", "Your id: " + userId);
+    }
+
+    */
+
+    @RequestMapping("deleteTask")
+    public ModelAndView deleteCustomer(@RequestParam("taskId") String id)
+    {
+        String userId = info.get(1);
+        String code = info.get(0);
+        if (code == null || code.equals("")) {
+            throw new RuntimeException(
+                    "ERROR:Didn't get code parameter in callback.");
+        }
+        // temp will store info for the object that we want to delete
+        TasksEntity temp = new TasksEntity();
+        temp.setTaskId(id);
+
+
+        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+
+        SessionFactory fact = cfg.buildSessionFactory();
+
+        Session tasks = fact.openSession();
+       tasks.beginTransaction();
+
+        tasks.delete(temp);// delete the object from the list
+
+        tasks.getTransaction().commit();// delete the row from the database
+
+
+        return new
+                ModelAndView("habits","message","Your id: " + userId);
+
     }
 
     @RequestMapping("complete")
