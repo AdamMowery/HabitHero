@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 
@@ -51,7 +52,17 @@ public class HomeController {
 
     @RequestMapping("habits")
 
-    public ModelAndView welcome(Model model) {
+    public ModelAndView welcome(Model model, HttpSession session) {
+
+        if (session.getAttribute("counter") == null) {
+            session.setAttribute("counter", info);
+        }
+
+        info = (ArrayList<String>) session.getAttribute("counter");
+
+
+        session.setAttribute("Array", info);
+
 
         String code = info.get(0);
 
@@ -71,16 +82,16 @@ public class HomeController {
         if (userList.size() == 0) {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
+            Session s = sessionFact.openSession();
+            Transaction tx = s.beginTransaction();
             UsernamesEntity newuser = new UsernamesEntity();
             newuser.setUserId(info.get(1));
             newuser.setFullname(info.get(2));
             newuser.setEmail(info.get(3));
             newuser.setPoints(0);
-            session.save(newuser);
+            s.save(newuser);
             tx.commit();
-            session.close();
+            s.close();
         }
 //   ******* Table of tasks *********
         //tasks is  a methods to connect to the database
@@ -93,7 +104,7 @@ public class HomeController {
 
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints());
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
 
     }
 
