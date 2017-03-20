@@ -35,6 +35,16 @@ public class HomeController {
 
     }
 
+    @RequestMapping("about")
+
+    public ModelAndView aboutPage() {
+        FBConnection fbConnection = new FBConnection();
+
+        return new
+                ModelAndView("about", "message", fbConnection.getFBAuthUrl());
+
+    }
+
 
     @RequestMapping("welcome")
     public ModelAndView welcome(@RequestParam("code") String code) {
