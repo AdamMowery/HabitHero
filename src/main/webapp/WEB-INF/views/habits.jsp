@@ -88,7 +88,7 @@ ${message}
                 <tr>
                     <td>${task.taskId}</td>
                     <td><a href="complete?taskId=${task.taskId}"> Complete </a></td>
-
+                    <td><a href="deleteTask?taskId=${task.taskId}"> Complete </a></td>
                 </tr>
             </c:forEach>
 

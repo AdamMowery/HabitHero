@@ -146,6 +146,44 @@ public class HomeController {
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
 
+    @RequestMapping("deleteTask")
+
+    public ModelAndView deleteTask(@RequestParam("task") String taskId, Model model) {
+        String userId = info.get(1);
+        String code = info.get(0);
+        if (code == null || code.equals("")) {
+            throw new RuntimeException(
+                    "ERROR:Didn't get code parameter in callback.");
+        }
+
+        Criteria c = tasks();
+        // searches for where userId and taskId match the user input
+        c.add(Restrictions.like("userId", "%" + userId + "%"));
+        c.add(Restrictions.like("taskId", "%" + taskId + "%"));
+        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
+
+//  *********** add task to database if not already there ******
+        if (taskList.size() == 1) {
+            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
+            SessionFactory sessionFact = cfg.buildSessionFactory();
+            Session session = sessionFact.openSession();
+            Transaction tx = session.beginTransaction();
+            TasksEntity deleteTask = new TasksEntity();
+            deleteTask.setUserId(userId);
+            deleteTask.setTaskId(taskId);
+            session.save(deleteTask);
+            tx.commit();
+            session.close();
+        }
+        //displays updated task list
+        Criteria t = tasks();
+        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
+        model.addAttribute("tasks", newtaskList);
+        return new
+                ModelAndView("habits", "message", "Your id: " + userId);
+    }
+
     @RequestMapping("complete")
     public ModelAndView completedTask(@RequestParam("taskId") String id, Model model) {
 
