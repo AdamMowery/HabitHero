@@ -81,8 +81,9 @@ ${message}
 
             <tr>
 
-                <th>task</th>
-                <th>complete</th>
+                <th>Task</th>
+                <th>Complete</th>
+                <th>Delete a task</th>
             </tr>
             <c:forEach var="task" items="${tasks}">
                 <tr>

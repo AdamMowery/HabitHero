@@ -140,51 +140,16 @@ public class HomeController {
         //displays updated task list
         Criteria t = tasks();
         t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", newtaskList);
         return new
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
 
-   /*@RequestMapping("deleteTask")
-
-    public ModelAndView deleteTask(@RequestParam("taskId") String taskId, Model model) {
-        String userId = info.get(1);
-        String code = info.get(0);
-        if (code == null || code.equals("")) {
-            throw new RuntimeException(
-                    "ERROR:Didn't get code parameter in callback.");
-        }
-/*
-
-
-        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
-
-//  *********** add task to database if not already there ******
-        if (taskList.size() == 1) {
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-           Transaction tx = session.beginTransaction();
-            TasksEntity deleteTask = new TasksEntity();
-            session.delete("taskId");
-            session.save(deleteTask);
-            tx.commit();
-            session.close();
-
-        //displays updated task list
-        Criteria t = tasks();
-        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
-        ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
-        model.addAttribute("tasks", newtaskList);
-        return new
-                ModelAndView("habits", "message", "Your id: " + userId);
-    }
-
-    */
 
     @RequestMapping("deleteTask")
-    public ModelAndView deleteCustomer(@RequestParam("taskId") String id)
+    public ModelAndView deleteCustomer(@RequestParam("taskId") String id, Model model)
     {
         String userId = info.get(1);
         String code = info.get(0);
@@ -195,7 +160,7 @@ public class HomeController {
         // temp will store info for the object that we want to delete
         TasksEntity temp = new TasksEntity();
         temp.setTaskId(id);
-
+        temp.setUserId(userId);
 
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
 
@@ -207,6 +172,13 @@ public class HomeController {
         tasks.delete(temp);// delete the object from the list
 
         tasks.getTransaction().commit();// delete the row from the database
+
+
+        Criteria t = tasks();
+        t.add(Restrictions.eq("userId", info.get(1)));
+        t.add(Restrictions.eq("completed", 0));
+        ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
+        model.addAttribute("tasks", taskList);
 
 
         return new
