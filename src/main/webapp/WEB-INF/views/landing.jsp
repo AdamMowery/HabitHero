@@ -79,7 +79,7 @@
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
 
-                
+
                 <div class="col-lg-8 col-lg-offset-2 text-center"> 
                     <a href="${message}" class="btn btn-lg btn-outline">Login/Sign up! </a> 
                 </div>
