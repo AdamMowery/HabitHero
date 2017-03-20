@@ -230,7 +230,7 @@ public class HomeController {
         model.addAttribute("tasks", unfinishedTasks);
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your poinst: " + userList.get(0).getPoints());
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
 
     }
 
