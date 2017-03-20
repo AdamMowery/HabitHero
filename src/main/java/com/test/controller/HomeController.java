@@ -36,7 +36,7 @@ public class HomeController {
     }
 
 
-    @RequestMapping("bullShitScreen")
+    @RequestMapping("welcome")
     public ModelAndView welcome(@RequestParam("code") String code) {
 
         FacebookConnection facebookConnection = new FacebookConnection(code);
@@ -47,7 +47,7 @@ public class HomeController {
         info.add(facebookConnection.getEmail());
 
         return new
-                ModelAndView("bullShitScreen", "message", "");
+                ModelAndView("welcome", "message", "");
     }
 
     @RequestMapping("habits")
@@ -331,15 +331,6 @@ public class HomeController {
                 ModelAndView("addFriends", "friends", userList2);
 
     }
-
-
-
-
-
-
-
-
-
 
 
     static class FacebookConnection {
