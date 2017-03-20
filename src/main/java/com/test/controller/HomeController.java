@@ -35,6 +35,15 @@ public class HomeController {
 
     }
 
+    @RequestMapping("PrivacyPolicy")
+
+    public ModelAndView viewPrivacyPolicy() {
+
+        return new
+                ModelAndView("PrivacyPolicy", "message", "");
+
+    }
+
     @RequestMapping("about")
 
     public ModelAndView aboutPage() {

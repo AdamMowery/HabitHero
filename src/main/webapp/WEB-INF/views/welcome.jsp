@@ -63,7 +63,7 @@
                 </li>
 
                 <li class="page-scroll">
-                    <a href="about.jsp">ABOUT</a>
+                    <a href="about">ABOUT</a>
                 </li>
 
                 <li class="page-scroll">

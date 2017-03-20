@@ -46,6 +46,23 @@
 
 
         <!-- /.navbar-collapse -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hidden">
+                    <a href="#page-top"></a>
+                </li>
+                <li class="page-scroll">
+                    <a href="about">ABOUT</a>
+                </li>
+
+                <li class="page-scroll">
+                    <a href="PrivacyPolicy">PRIVACY POLICY</a>
+                </li>
+
+
+
+            </ul>
+        </div>
     </div>
     <!-- /.container-fluid -->
 </nav>
@@ -61,9 +78,11 @@
                     <hr class="star-light" style = "background-color: #0DB1FF" >
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
+
+                <a class="btn btn-lg btn-outline" style = "color: #2B3B50;  margin: 5px" href="PrivacyPolicy">PRIVACY PAGE</a>
                 <div class="col-lg-8 col-lg-offset-2 text-center"> 
-                    <a href="${message}" class="btn btn-lg btn-outline">
-                          Login/Sign up!  </a> </div>
+                    <a href="${message}" class="btn btn-lg btn-outline">Login/Sign up! </a> 
+                </div>
             </div>
         </div>
     </div>
