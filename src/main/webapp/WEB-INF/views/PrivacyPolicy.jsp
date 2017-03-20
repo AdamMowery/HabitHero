@@ -55,8 +55,12 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="landing">BACK TO LOGIN</a>
+                    <a href="/">LOGIN</a>
                 </li>
+                <li class="page-scroll">
+                    <a href="aboutPreLogin">ABOUT</a>
+                </li>
+
 
 
 

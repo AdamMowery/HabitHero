@@ -19,7 +19,7 @@
 
 
     <!-- Custom Fonts -->
-    <link href="../resources/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
+    <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -30,12 +30,12 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    ${message}
 </head>
 
-<body id="page-top" style = "background-color: #4FA4FF" class="index">
+<body id="page-top" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
-<!-- Navigation -->
 <!-- Navigation -->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
     <div class="container">
@@ -54,7 +54,7 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="PrivacyPolicy">PrivacyPolicy</a>
+                    <a href="/">LOGIN</a>
                 </li>
 
                 <li class="page-scroll">
@@ -70,29 +70,73 @@
 </nav>
 
 <!-- Header -->
-<header >
-    <div class="container"  style = "background-color: #4FA4FF" id="maincontent" tabindex="-1">
+<!-- TODO make this stuff centered -- talk to front end people -->
+<header style = "padding-left: 5em; padding-right: 5em;">
+    <div class="container" id="maincontent" tabindex="-1">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" height="300em" width="300em" src="../resources/img/portfolio/mascot1.png" alt="">
+
+
                 <div class="intro-text">
-                    <h1 class="name">HABIT HERO</h1>
-                    <hr class="star-light" style = "background-color: #0DB1FF" >
-                    <span class="skills">Gamifying your habits by competing with friends.</span>
-                </div>
+                    <h1 style = "font-size: 4em;" class="name">ABOUT</h1>
+                    <hr class="star-light">
 
-
-                <div class="col-lg-8 col-lg-offset-2 text-center"> 
-                    <a href="${message}" class="btn btn-lg btn-outline">Login/Sign up! </a> 
                 </div>
+                <br>
             </div>
+            <div>
+                <h3 class="skills">WHO</h3>
+                <hr class="star-light">
+                <span class="skills">Habit Hero was created by Adam Mowery, Jeffrey Blumenkopf, and David Shinabarger at Grand Circus Java Bootcamp in Detroit, Michigan. Our Mascot, Harry, was partly <a style = "color: #2B3B50;" href="http://www.freepik.com">designed by Freepik</a>
+
+</span>
+            </div>
+            <br>
+
+            <h3 class="skills">CONTACT US </h3>
+            <hr class="star-light">
+            <p>
+                <a class="btn btn-lg btn-outline" style = "color: #2B3B50;  margin: 5px" href="https://www.linkedin.com/in/jeffreyblumenkopf/">JEFFREY BLUMENKOPF</a>
+                <a class="btn btn-lg btn-outline" style = "color: #2B3B50;  margin: 5px" href="https://www.linkedin.com/in/adam-mowery/">ADAM MOWERY</a>
+                <a class="btn btn-lg btn-outline" style = "color: #2B3B50;  margin: 5px" href="https://www.davidshinabarger.com/">DAVID SHINABARGER</a>
+            </p>
+            <br>
+            <br>
+
+            <h3 class="skills">WHY</h3>
+            <hr class="star-light">
+            <span class="skills">Because we wanted to create a platform where you can challenge friends in a competitive and accountable way to become a better person and make a better world.
+<br>
+                </span>
+            <br>
+            <br>
+        </div>
+        <div>
+            <h3 class="skills">HOW IT WORKS</h3>
+            <hr class="star-light">
+            <span class="skills">Add a task, add friends, and then you can see how you stack up.
+                    <br>
+</span>
+            <br>
+        </div>
+        <div>
+            <h3 class="skills">WHAT IS HABIT HERO</h3>
+            <hr class="star-light">
+            <span class="skills">Habit Hero is a game you play, with friends. You compete and challenge others to create better life habits. Maybe you want to challenge a friend to meditate every day for 10 minutes. Maybe you want to challenge your life partner to see who can spend less money eating out. Maybe you want to go to brush your teeth every day. Whatever the challenge, we hope you can use this platform to compete with friends.
+</span>
+
+
+
+
+
         </div>
     </div>
 </header>
 
+
 <!-- Footer -->
-<footer class="text-center" style = "background-color: #2C3D51">
-    <div class="footer-above" style = "background-color: #2C3D51">
+<footer class="text-center">
+    <div class="footer-above">
         <div class="container">
             <div class="row">
                 <div class="footer-col col-md-4">
@@ -119,20 +163,19 @@
                             <a href="#" class="btn-social btn-outline"><span class="sr-only">Dribble</span><i class="fa fa-fw fa-dribbble"></i></a>
                         </li>
                     </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-below">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    Copyright &copy; Your Website 2016
                 </div>
             </div>
         </div>
-    </div>
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Your Website 2016
+                    </div>
+                </div>
+            </div>
+        </div>
 </footer>
-
 
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
 <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
@@ -140,8 +183,6 @@
         <i class="fa fa-chevron-up"></i>
     </a>
 </div>
-
-
 
 
 <!-- jQuery -->
