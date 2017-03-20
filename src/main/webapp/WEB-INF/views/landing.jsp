@@ -19,7 +19,7 @@
 
 
     <!-- Custom Fonts -->
-    <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../resources/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 
@@ -32,17 +32,15 @@
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" style = "background-color: #4FA4FF" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
 <!-- Navigation -->
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-    <div class="container">
+<nav id="mainNav" style = "background-color: #2C3D51" class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="container" >
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
+
             <a class="navbar-brand" href="#page-top">HABIT HERO</a>
         </div>
 
@@ -53,14 +51,14 @@
 </nav>
 
 <!-- Header -->
-<header>
-    <div class="container" id="maincontent" tabindex="-1">
+<header >
+    <div class="container"  style = "background-color: #4FA4FF" id="maincontent" tabindex="-1">
         <div class="row">
             <div class="col-lg-12">
-                <img class="img-responsive" style="width:20em; height:20em;" src="../resources/img/superhero1.jpg" alt="">
+                <img class="img-responsive" height="300em" width="300em" src="../resources/img/superhero1.jpg" alt="">
                 <div class="intro-text">
                     <h1 class="name">HABIT HERO</h1>
-                    <hr class="star-light">
+                    <hr class="star-light" style = "background-color: #0DB1FF" >
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center"> 
@@ -72,8 +70,8 @@
 </header>
 
 <!-- Footer -->
-<footer class="text-center">
-    <div class="footer-above">
+<footer class="text-center" style = "background-color: #2C3D51">
+    <div class="footer-above" style = "background-color: #2C3D51">
         <div class="container">
             <div class="row">
                 <div class="footer-col col-md-4">
@@ -113,6 +111,7 @@
         </div>
     </div>
 </footer>
+
 
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
 <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">

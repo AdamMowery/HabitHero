@@ -55,7 +55,7 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="bullShitScreen">HOME</a>
+                    <a href="welcome">HOME</a>
                 </li>
                 <li class="page-scroll">
                     <a href="addfriends">ADD FRIENDS</a>
