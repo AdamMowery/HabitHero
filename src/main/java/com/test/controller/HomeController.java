@@ -79,13 +79,13 @@ public class HomeController {
             session.setAttribute("Array", info);
         }
 
-        info = (ArrayList<String>) session.getAttribute("Array");
+      //  info = (ArrayList<String>) session.getAttribute("Array");
 
 
-        session.setAttribute("Array", info);
+     //   session.setAttribute("Array", info);
 
         return new
-                ModelAndView("welcome", "message", "");
+                ModelAndView("welcome", "message",facebookConnection.getId() );
     }
 
     @RequestMapping("habits")

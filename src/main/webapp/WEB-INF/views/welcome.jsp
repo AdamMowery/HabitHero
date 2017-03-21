@@ -89,6 +89,7 @@
                 <br>
                 <div class="intro-text">
                     <h1 class="name">HABIT HERO</h1>
+                    ${message}
                     <hr class="star-light">
                     <span class="skills">Gamifying your habits by competing with friends.</span>
                 </div>
