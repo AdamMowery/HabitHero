@@ -130,8 +130,14 @@ public class HomeController {
         // adds the taskList attribute to the model tasks
         model.addAttribute("tasks", taskList);
 
-        return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+
+if (userList.size() ==1) {
+
+    return new
+            ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+}
+return new
+        ModelAndView("habits","message","your id: "+info.get(1)+ " your points: 0");
 
     }
 
