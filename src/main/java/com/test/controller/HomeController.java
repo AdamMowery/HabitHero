@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-
 
 import java.util.Collections;
 import java.util.Map;
@@ -24,9 +22,8 @@ import java.util.Map;
 @Controller
 public class HomeController {
 
-
     @RequestMapping("/")
-
+/// Connects to facebook just to get a authorization code.Displays landing page with login button. Nothing is displayed in message.
     public ModelAndView landingPage() {
         FBConnection fbConnection = new FBConnection();
 
@@ -36,7 +33,7 @@ public class HomeController {
     }
 
     @RequestMapping("PrivacyPolicy")
-
+// Displays PrivacyPolicy .jsp . Don't need to log in to see page
     public ModelAndView viewPrivacyPolicy() {
 
         return new
@@ -45,27 +42,28 @@ public class HomeController {
     }
 
     @RequestMapping("about")
-
+// Displays about .jsp . Don't need to log in to see page
     public ModelAndView aboutPage() {
-        FBConnection fbConnection = new FBConnection();
 
         return new
-                ModelAndView("about", "message", fbConnection.getFBAuthUrl());
+                ModelAndView("about", "message", "");
 
     }
-
+    //TODO consolidate about pages
     @RequestMapping("aboutPreLogin")
-
+// Displays aboutPreLogin .jsp .
     public ModelAndView aboutPageBeforeLoggingIn() {
-        
 
         return new
                 ModelAndView("aboutPreLogin", "message", "");
 
     }
 
-
     @RequestMapping("welcome")
+   /*  Displays after user logs in.
+       Completes facebook connnection and gets user(id, name, email)
+       Also starts Session
+    */
     public ModelAndView welcome(@RequestParam("code") String code, HttpSession session) {
         ArrayList<String> info = new ArrayList<>();
         FacebookConnection facebookConnection = new FacebookConnection(code);
@@ -75,28 +73,26 @@ public class HomeController {
         info.add(facebookConnection.getOut());
         info.add(facebookConnection.getEmail());
 
+        // if session object that holds user info is empty, a new session is created.
         if (session.getAttribute("Array") == null) {
             session.setAttribute("Array", info);
         }
 
-      //  info = (ArrayList<String>) session.getAttribute("Array");
+        //  info = (ArrayList<String>) session.getAttribute("Array");
 
-
-     //   session.setAttribute("Array", info);
+        //   session.setAttribute("Array", info);
 
         return new
-                ModelAndView("welcome", "message",facebookConnection.getId() );
+                ModelAndView("welcome", "message", facebookConnection.getId());
     }
 
     @RequestMapping("habits")
-
-    public ModelAndView welcome(Model model, HttpSession session) {
+/*Displays after the user clicks on the habits button*/
+    public ModelAndView habits(Model model, HttpSession session) {
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
 
-
-
+// Pulls the code for the user
         String code = info.get(0);
-
 
         if (code == null || code.equals("")) {
             throw new RuntimeException(
@@ -104,12 +100,13 @@ public class HomeController {
         }
 
 //    ********* array list of users**************
-        // userNamelist creates connection with the database
+// userNamelist creates connection with the database
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        c.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
 //  *********** add user to database if not already there ******
+//
         if (userList.size() == 0) {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
@@ -124,15 +121,14 @@ public class HomeController {
             tx.commit();
             s.close();
         }
-//   ******* Table of tasks *********
-        //tasks is  a methods to connect to the database
+//   ******* Displays Table of tasks *********
+// the tasks method gets the tasks table and displays as an array
         Criteria t = tasks();
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
+        // adds the taskList attribute to the model tasks
         model.addAttribute("tasks", taskList);
-
-
 
         return new
                 ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
@@ -151,9 +147,11 @@ public class HomeController {
         }
 
         Criteria c = tasks();
-        // searches for where userId and taskId match the user input
-        c.add(Restrictions.like("userId", "%" + userId + "%"));
-        c.add(Restrictions.like("taskId", "%" + taskId + "%"));
+        // searches the database where userId and taskId match the user input.
+        //adds to c where user id and task id match user input
+        //adds to arraylist all elements in the c list
+        c.add(Restrictions.eq("userId", userId ));
+        c.add(Restrictions.eq("taskId", taskId ));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
 //  *********** add task to database if not already there ******
@@ -171,7 +169,7 @@ public class HomeController {
         }
         //displays updated task list
         Criteria t = tasks();
-        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", newtaskList);
@@ -179,19 +177,26 @@ public class HomeController {
                 ModelAndView("habits", "message", "Your id: " + userId);
     }
 
-
     @RequestMapping("deleteTask")
+    /*
+    Deletes a tasks. No points awarded to user
+     */
     public ModelAndView deleteCustomer(@RequestParam("taskId") String id, Model model, HttpSession session) {
-
+// gets Http session. What is the "Array"?
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
+// gets  the info at index 0 which is the userId
         String userId = info.get(1);
+//returns the code which stored at index 0 of the info arrray
         String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
         // temp will store info for the object that we want to delete
+
+        //makes a TasksEntity object called temp
         TasksEntity temp = new TasksEntity();
+        // sets task id and user id to variables passed in to method
         temp.setTaskId(id);
         temp.setUserId(userId);
 
@@ -200,12 +205,12 @@ public class HomeController {
         SessionFactory fact = cfg.buildSessionFactory();
 
         Session tasks = fact.openSession();
-       tasks.beginTransaction();
 
-        tasks.delete(temp);// delete the object from the list
+        tasks.beginTransaction();
+//the tasks.delete deletes the task where the the object matches the temp object
+        tasks.delete(temp);
 
-        tasks.getTransaction().commit();// delete the row from the database
-
+        tasks.getTransaction().commit();
 
         Criteria t = tasks();
         t.add(Restrictions.eq("userId", info.get(1)));
@@ -213,9 +218,8 @@ public class HomeController {
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", taskList);
 
-
         return new
-                ModelAndView("habits","message","Your id: " + userId);
+                ModelAndView("habits", "message", "Your id: " + userId);
 
     }
 
@@ -232,7 +236,6 @@ public class HomeController {
         Criteria c = userNamelist();
         c.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
-
 
         if (completedTask.size() == 1) {
             completedTask.get(0).setCompleted(1);
@@ -255,7 +258,6 @@ public class HomeController {
             tc.commit();
             sessio.close();
         }
-
 
         Criteria u = tasks();
         u.add(Restrictions.eq("userId", info.get(1)));
@@ -293,7 +295,7 @@ public class HomeController {
 
     @RequestMapping("leaderboard")
 
-    public ModelAndView leading( HttpSession session) {
+    public ModelAndView leading(HttpSession session) {
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         String code = info.get(0);
@@ -387,7 +389,6 @@ public class HomeController {
             }
         }
 
-
         //redisplays friends table with added friend
         Criteria g = friends();
         g.add(Restrictions.eq("userId", info.get(1)));
@@ -405,13 +406,10 @@ public class HomeController {
             userList2.add((UsernamesEntity) d.list().get(0));
         }
 
-
-
         return new
                 ModelAndView("addFriends", "friends", userList2);
 
     }
-
 
     static class FacebookConnection {
         private String code;
@@ -457,6 +455,5 @@ public class HomeController {
             return this;
         }
     }
-
 
 }
