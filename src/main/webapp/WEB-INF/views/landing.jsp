@@ -45,6 +45,7 @@
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
             <a class="navbar-brand" href="#page-top">HABIT HERO</a>
+            <img class="img-responsive" height="20px" width="20px" src="../resources/img/logo1.png" alt="">
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
