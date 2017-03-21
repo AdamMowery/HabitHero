@@ -33,14 +33,13 @@
     <![endif]-->
 
 
-
 </head>
 
 <body id="page-top" class="index text-center">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
 <!-- Navigation -->
-<nav id="mainNav"  class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
+<nav id="mainNav" class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -73,8 +72,6 @@
                 </li>
 
 
-
-
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -83,17 +80,15 @@
 </nav>
 
 
-
 <!-- Header -->
-<header style = "background-color: #2B3B50" class = "text-center" >
-
+<header style="background-color: #2B3B50" class="text-center">
 
 
     <!-- About Section -->
-    <section style = "background-color: #50A1FF; " class="success text-center" id="leaderboard">
+    <section style="background-color: #50A1FF; " class="success text-center" id="leaderboard">
         <h2>LEADERBOARD</h2>
         <hr class="star-light">
-        <div class="leaderboard" style = "padding-left: 25em;">
+        <div class="leaderboard" style="padding-left: 25em;">
             <div class="text-center">
                 <div class="text-center">
                     <table border="1">
@@ -114,8 +109,8 @@
 
                     </table>
 
-                    <br />
-                    <br />
+                    <br/>
+                    <br/>
                 </div>
 
             </div>
