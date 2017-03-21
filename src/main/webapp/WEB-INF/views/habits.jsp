@@ -38,7 +38,7 @@
 
 <body id="page-top" class="index text-center">
 
-${message}
+
 
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
@@ -89,26 +89,28 @@ ${message}
 
     <section style="background-color: #50A1FF; " class="success text-center" id="newhabit">
 
+
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
+                    <h3>${message}</h3>
                     <h2>Create new Habit</h2>
                     <h3>Add a new habit here. </h3>
-                    <hr class="star-primary">
+                    <hr class="star-light" style = "color: #ffffff" >
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
 
-                    <form action="addTask" method="post">
+                    <form action="addTask" style = "color: #2B3B50" method="post">
 
-                        Enter a new task<input type="text" name="task">
-                        <input type="submit" value="Add">
+                        Enter a new task<input type="text" style = "color: #2B3B50" name="task">
+                        <input type="submit" style = "color: #2B3B50" value="Add">
                     </form>
 
                 </div>
             </div>
-            <hr/>
             <h3 class="text-center">
                 YOUR CURRENT HABITS ARE
             </h3>
