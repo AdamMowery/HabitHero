@@ -106,7 +106,7 @@ public class HomeController {
 //    ********* array list of users**************
         // userNamelist creates connection with the database
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        c.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
 //  *********** add user to database if not already there ******
@@ -155,8 +155,8 @@ return new
 
         Criteria c = tasks();
         // searches for where userId and taskId match the user input
-        c.add(Restrictions.like("userId", "%" + userId + "%"));
-        c.add(Restrictions.like("taskId", "%" + taskId + "%"));
+        c.add(Restrictions.eq("userId", userId));
+        c.add(Restrictions.eq("taskId", taskId));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
 //  *********** add task to database if not already there ******
@@ -174,7 +174,7 @@ return new
         }
         //displays updated task list
         Criteria t = tasks();
-        t.add(Restrictions.like("userId", "%" + info.get(1) + "%"));
+        t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", newtaskList);
@@ -323,7 +323,7 @@ return new
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria c = userNamelist();
-            c.add(Restrictions.like("userId", "%" + token + "%"));
+            c.add(Restrictions.eq("userId",token));
             userList.add((UsernamesEntity) c.list().get(0));
         }
         //sorts user list by points. (method is located in the UsernamesEntity class)
@@ -353,7 +353,7 @@ return new
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria c = userNamelist();
-            c.add(Restrictions.like("userId", "%" + token + "%"));
+            c.add(Restrictions.eq("userId", token));
             userList.add((UsernamesEntity) c.list().get(0));
         }
 
@@ -366,11 +366,11 @@ return new
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         Criteria c = userNamelist();
-        c.add(Restrictions.like("userId", "%" + id + "%"));
+        c.add(Restrictions.eq("userId", id));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
 
         Criteria f = friends();
-        f.add(Restrictions.like("userId", "%" + id + "%"));
+        f.add(Restrictions.eq("userId", id));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         if (friendsList.size() == 0 && userList.size() == 1) {
             if (!id.equals(info.get(1))) {
@@ -404,7 +404,7 @@ return new
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria d = userNamelist();
-            d.add(Restrictions.like("userId", "%" + token + "%"));
+            d.add(Restrictions.eq("userId", token));
             userList2.add((UsernamesEntity) d.list().get(0));
         }
 
