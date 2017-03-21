@@ -12,6 +12,9 @@
     <title>Habit Hero Theme</title>
 
     <!-- Bootstrap Core CSS -->
+    <!-- HAD TO ADD "../rescources/" to all hrefs to make them work
+    after pasting bootstrap template into the resources folder under webapp-->
+
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
@@ -19,6 +22,7 @@
 
 
     <!-- Custom Fonts -->
+
     <link href="../resources/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
@@ -35,11 +39,10 @@
 <body id="page-top" style = "background-color: #4FA4FF" class="index">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
-<!-- Navigation -->
-<!-- Navigation -->
+<!-- Navigation TOP BAR-->
 <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
     <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
+        <!-- This button appears if screen is small or on mobile so that the links aren't hidden completely -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
@@ -48,7 +51,7 @@
             <img class="img-responsive" height="20px" width="20px" src="../resources/img/logo1.png" alt="">
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- All link elements -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="hidden">
@@ -84,8 +87,9 @@
 
 
                 <div class="col-lg-8 col-lg-offset-2 text-center"> 
+                    <!-- when button is clicked, href to the message -->
                     <a href="${message}" class="btn btn-lg btn-outline">Login/Sign up! </a> 
-                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -141,9 +145,6 @@
         <i class="fa fa-chevron-up"></i>
     </a>
 </div>
-
-
-
 
 <!-- jQuery -->
 <script src="../resources/vendor/jquery/jquery.min.js"></script>

@@ -107,14 +107,15 @@ ${message}
 
 
                 </form>
-        <div class="success text-center" style="margin-left: 5em; font-color: #FFFFFF;" >
-                <table border="2" style = "color: #2B3B50; padding-left: 5em; margin-left: 15em;" class="success text-center">
+                 <div class="success text-center" style="margin-left: 5em; font-color: #FFFFFF;" >
+                     <table border="2" style = "color: #2B3B50; padding-left: 5em; margin-left: 15em;" class="success text-center">
 
                     <tr style = "padding: 5em; font-color: #FFFFFF;" class = "success text-center">
 
                         <th>friend name</th>
                         <th>friend points</th>
                     </tr>
+                         <!-- TODO why do we not have to use get?-->
                     <c:forEach var="friend" items="${friends}">
                         <tr>
                             <td>${friend.fullname}</td>
@@ -124,8 +125,8 @@ ${message}
                         </tr>
                     </c:forEach>
 
-                </table>
-        </div>
+                    </table>
+                 </div>
 
             </div>
 
