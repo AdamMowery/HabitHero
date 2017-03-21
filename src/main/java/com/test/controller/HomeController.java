@@ -124,6 +124,7 @@ public class HomeController {
             tx.commit();
             s.close();
         }
+
 //   ******* Table of tasks *********
         //tasks is  a methods to connect to the database
         Criteria t = tasks();
@@ -132,11 +133,13 @@ public class HomeController {
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", taskList);
 
+if (userList.size() ==1) {
 
-
-        return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
-
+    return new
+            ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+}
+return new
+        ModelAndView("habits","message","your id: "+info.get(1)+ " your points: 0");
     }
 
     @RequestMapping("addTask")
