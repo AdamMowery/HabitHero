@@ -153,17 +153,13 @@ return new
         }
 
         Criteria c = tasks();
-<<<<<<< HEAD
-        // searches for where userId and taskId match the user input
-        c.add(Restrictions.eq("userId", userId));
-        c.add(Restrictions.eq("taskId", taskId));
-=======
+
         // searches the database where userId and taskId match the user input.
         //adds to c where user id and task id match user input
         //adds to arraylist all elements in the c list
         c.add(Restrictions.eq("userId", userId ));
         c.add(Restrictions.eq("taskId", taskId ));
->>>>>>> refs/remotes/origin/master
+
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
 //  *********** add task to database if not already there ******
