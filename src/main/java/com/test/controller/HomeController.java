@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-    ArrayList<String> info = new ArrayList<String>();
+
 
     @RequestMapping("/")
 
@@ -66,14 +66,23 @@ public class HomeController {
 
 
     @RequestMapping("welcome")
-    public ModelAndView welcome(@RequestParam("code") String code) {
-
+    public ModelAndView welcome(@RequestParam("code") String code, HttpSession session) {
+        ArrayList<String> info = new ArrayList<>();
         FacebookConnection facebookConnection = new FacebookConnection(code);
         facebookConnection.invoke();
         info.add(code);
         info.add(facebookConnection.getId());
         info.add(facebookConnection.getOut());
         info.add(facebookConnection.getEmail());
+
+        if (session.getAttribute("Array") == null) {
+            session.setAttribute("Array", info);
+        }
+
+        info = (ArrayList<String>) session.getAttribute("Array");
+
+
+        session.setAttribute("Array", info);
 
         return new
                 ModelAndView("welcome", "message", "");
@@ -82,15 +91,8 @@ public class HomeController {
     @RequestMapping("habits")
 
     public ModelAndView welcome(Model model, HttpSession session) {
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
 
-//        if (session.getAttribute("counter") == null) {
-//            session.setAttribute("counter", info);
-//        }
-//
-//        info = (ArrayList<String>) session.getAttribute("counter");
-//
-//
-//        session.setAttribute("Array", info);
 
 
         String code = info.get(0);
@@ -139,7 +141,8 @@ public class HomeController {
 
     @RequestMapping("addTask")
 
-    public ModelAndView addTask(@RequestParam("task") String taskId, Model model) {
+    public ModelAndView addTask(@RequestParam("task") String taskId, Model model, HttpSession session) {
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         String userId = info.get(1);
         String code = info.get(0);
         if (code == null || code.equals("")) {
@@ -157,14 +160,14 @@ public class HomeController {
         if (taskList.size() == 0) {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
+            Session s = sessionFact.openSession();
+            Transaction tx = s.beginTransaction();
             TasksEntity newTask = new TasksEntity();
             newTask.setUserId(userId);
             newTask.setTaskId(taskId);
-            session.save(newTask);
+            s.save(newTask);
             tx.commit();
-            session.close();
+            s.close();
         }
         //displays updated task list
         Criteria t = tasks();
@@ -178,8 +181,9 @@ public class HomeController {
 
 
     @RequestMapping("deleteTask")
-    public ModelAndView deleteCustomer(@RequestParam("taskId") String id, Model model)
-    {
+    public ModelAndView deleteCustomer(@RequestParam("taskId") String id, Model model, HttpSession session) {
+
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         String userId = info.get(1);
         String code = info.get(0);
         if (code == null || code.equals("")) {
@@ -216,8 +220,9 @@ public class HomeController {
     }
 
     @RequestMapping("complete")
-    public ModelAndView completedTask(@RequestParam("taskId") String id, Model model) {
+    public ModelAndView completedTask(@RequestParam("taskId") String id, Model model, HttpSession session) {
 
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         //
         Criteria t = tasks();
         t.add(Restrictions.eq("userId", info.get(1)));
@@ -236,11 +241,11 @@ public class HomeController {
 
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session session = sessionFact.openSession();
-            Transaction tx = session.beginTransaction();
-            session.update(userList.get(0));
+            Session s = sessionFact.openSession();
+            Transaction tx = s.beginTransaction();
+            s.update(userList.get(0));
             tx.commit();
-            session.close();
+            s.close();
 
             Configuration cf = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFac = cf.buildSessionFactory();
@@ -288,7 +293,9 @@ public class HomeController {
 
     @RequestMapping("leaderboard")
 
-    public ModelAndView leading() {
+    public ModelAndView leading( HttpSession session) {
+
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         String code = info.get(0);
         if (code == null || code.equals("")) {
             throw new RuntimeException(
@@ -328,7 +335,9 @@ public class HomeController {
     //do something with add bar to actually add friends
 
     @RequestMapping("addfriends")
-    public ModelAndView addFriendsPage() {
+    public ModelAndView addFriendsPage(HttpSession session) {
+
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         Criteria f = friends();
         f.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
@@ -350,7 +359,9 @@ public class HomeController {
     }
 
     @RequestMapping("addFriendButton")
-    public ModelAndView addFriendButton(@RequestParam("userid") String id, Model model) {
+    public ModelAndView addFriendButton(@RequestParam("userid") String id, HttpSession session) {
+
+        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
         Criteria c = userNamelist();
         c.add(Restrictions.like("userId", "%" + id + "%"));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
@@ -362,17 +373,17 @@ public class HomeController {
             if (!id.equals(info.get(1))) {
                 Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
                 SessionFactory sessionFact = cfg.buildSessionFactory();
-                Session session = sessionFact.openSession();
-                Transaction tx = session.beginTransaction();
+                Session s = sessionFact.openSession();
+                Transaction tx = s.beginTransaction();
 
                 MasterfriendsEntity newfriend = new MasterfriendsEntity();
                 newfriend.setUserId(info.get(1));
                 newfriend.setFriendId(id);
 
                 //this saves the object into the database, writes to DB, C in Crud for CREATE
-                session.save(newfriend);
+                s.save(newfriend);
                 tx.commit();
-                session.close();
+                s.close();
             }
         }
 
