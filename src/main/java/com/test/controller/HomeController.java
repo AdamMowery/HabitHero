@@ -83,14 +83,14 @@ public class HomeController {
 
     public ModelAndView welcome(Model model, HttpSession session) {
 
-        if (session.getAttribute("counter") == null) {
-            session.setAttribute("counter", info);
-        }
-
-        info = (ArrayList<String>) session.getAttribute("counter");
-
-
-        session.setAttribute("Array", info);
+//        if (session.getAttribute("counter") == null) {
+//            session.setAttribute("counter", info);
+//        }
+//
+//        info = (ArrayList<String>) session.getAttribute("counter");
+//
+//
+//        session.setAttribute("Array", info);
 
 
         String code = info.get(0);
