@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -34,11 +36,11 @@
 
 </head>
 
-<body id="page-top" class="index">
+<body id="page-top" class="index text-center">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
 <!-- Navigation -->
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+<nav id="mainNav"  class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
@@ -80,25 +82,46 @@
     <!-- /.container-fluid -->
 </nav>
 
-<!-- Header -->
-<header>
-    <div class="container" id="maincontent" tabindex="-1">
-        <div class="row">
-            <div class="col-lg-12">
-                <img class="img-responsive" style="width:20em; height:20em;" src="../resources/img/portfolio/mascot1.png" alt="">
-                <br>
-                <div class="intro-text">
-                    <h1 class="name">HABIT HERO</h1>
-                    <hr class="star-light">
-                    <span class="skills">Gamifying your habits by competing with friends.</span>
-                </div>
-                <br>
 
-                <h4 class="skills">Congrats! You have succesfully logged in!</h4>
+
+<!-- Header -->
+<header style = "background-color: #2B3B50" class = "text-center" >
+
+
+
+    <!-- About Section -->
+    <section style = "background-color: #50A1FF; " class="success text-center" id="leaderboard">
+        <h2>LEADERBOARD</h2>
+        <hr class="star-light">
+        <div class="leaderboard" style = "padding-left: 25em;">
+            <div class="text-center">
+                <div class="text-center">
+                    <table border="1">
+
+                        <tr>
+
+                            <th>name</th>
+                            <th>points</th>
+                        </tr>
+                        <c:forEach var="friend" items="${message}">
+                            <tr>
+                                <td>${friend.fullname}</td>
+                                <td>${friend.points}</td>
+
+
+                            </tr>
+                        </c:forEach>
+
+                    </table>
+
+                    <br />
+                    <br />
+                </div>
+
             </div>
 
         </div>
-    </div>
+    </section>
 </header>
 
 
