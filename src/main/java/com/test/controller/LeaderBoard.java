@@ -16,7 +16,7 @@ import java.util.Collections;
  * Created by Owner on 3/14/2017.
  */
 @Controller
-public class LeaderBoard extends getDBSession {
+public class LeaderBoard extends FriendInfo {
 
 
     @RequestMapping("leaderboard")
@@ -43,16 +43,9 @@ public class LeaderBoard extends getDBSession {
             userFriends.add(friendsList.get(i).getFriendId());
         }
         userFriends.add(info.get(1));
-        ArrayList<UsernamesEntity> userList = new ArrayList<>();
 
-        //get all of the user info(points, name, id , email)
-        for (String token : userFriends) {
-            Session findinfo = getSession();
-            Criteria c = findinfo.createCriteria(UsernamesEntity.class);
-            c.add(Restrictions.eq("userId", token));
-            userList.add((UsernamesEntity) c.list().get(0));
-            findinfo.close();
-        }
+        
+        ArrayList<UsernamesEntity> userList = getInfo(userFriends);
         //sorts user list by points. (method is located in the UsernamesEntity class)
         Collections.sort(userList);
 
