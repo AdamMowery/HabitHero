@@ -56,7 +56,8 @@ public class Addfriends extends FriendInfo {
 
         Session selectFriend = getSession();
         Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
-        f.add(Restrictions.eq("userId", id));
+        f.add(Restrictions.eq("friendId", id));
+        f.add(Restrictions.eq("userId",info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
         selectFriend.close();
 

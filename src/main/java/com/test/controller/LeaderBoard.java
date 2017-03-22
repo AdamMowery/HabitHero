@@ -44,7 +44,7 @@ public class LeaderBoard extends FriendInfo {
         }
         userFriends.add(info.get(1));
 
-        
+
         ArrayList<UsernamesEntity> userList = getInfo(userFriends);
         //sorts user list by points. (method is located in the UsernamesEntity class)
         Collections.sort(userList);

@@ -12,7 +12,6 @@ public class getDBSession {
     public Session getSession() {
 
         if (sessionFact == null) {
-
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             sessionFact = cfg.buildSessionFactory();
         }
