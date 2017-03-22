@@ -44,17 +44,14 @@ public class Habits extends getDBSession{
 //  *********** add user to database if not already there ******
 //
         if (userList.size() == 0) {
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session s = sessionFact.openSession();
-            Transaction tx = s.beginTransaction();
+            Session s = getSession();
             UsernamesEntity newuser = new UsernamesEntity();
             newuser.setUserId(info.get(1));
             newuser.setFullname(info.get(2));
             newuser.setEmail(info.get(3));
             newuser.setPoints(0);
             s.save(newuser);
-            tx.commit();
+            s.getTransaction().commit();
             s.close();
         }
 //   ******* Displays Table of tasks *********

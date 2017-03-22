@@ -35,27 +35,16 @@ public class DeleteTask extends getDBSession {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-        // temp will store info for the object that we want to delete
 
-        //makes a TasksEntity object called temp
+
+        Session s = getSession();
+
         TasksEntity temp = new TasksEntity();
-        // sets task id and user id to variables passed in to method
         temp.setTaskId(id);
         temp.setUserId(userId);
-
-        Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-
-        SessionFactory fact = cfg.buildSessionFactory();
-
-        Session tasks = fact.openSession();
-
-        tasks.beginTransaction();
-//the tasks.delete deletes the task where the the object matches the temp object
-        tasks.delete(temp);
-
-        tasks.getTransaction().commit();
-
-        tasks.close();
+        s.delete(temp);
+        s.getTransaction().commit();
+        s.close();
 
         Session selectTask = getSession();
         Criteria t = selectTask.createCriteria(TasksEntity.class);

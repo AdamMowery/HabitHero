@@ -45,12 +45,9 @@ public class CompleteTask extends getDBSession{
             int points = userList.get(0).getPoints();
             userList.get(0).setPoints(points + 5);
 
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session s = sessionFact.openSession();
-            Transaction tx = s.beginTransaction();
+            Session s = getSession();
             s.update(userList.get(0));
-            tx.commit();
+            s.getTransaction().commit();
             s.close();
 
             Configuration cf = new Configuration().configure("hibernate.cfg.xml");

@@ -43,15 +43,12 @@ public class AddTask extends getDBSession {
 
 //  *********** add task to database if not already there and not a empty string ******
         if (taskList.size() == 0 && !taskId.equals("")) {
-            Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFact = cfg.buildSessionFactory();
-            Session s = sessionFact.openSession();
-            Transaction tx = s.beginTransaction();
+            Session s = getSession();
             TasksEntity newTask = new TasksEntity();
             newTask.setUserId(userId);
             newTask.setTaskId(taskId);
             s.save(newTask);
-            tx.commit();
+            s.getTransaction().commit();
             s.close();
         }
         //displays updated task list

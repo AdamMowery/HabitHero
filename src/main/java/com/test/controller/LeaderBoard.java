@@ -33,9 +33,7 @@ public class LeaderBoard extends getDBSession {
                     "ERROR:Didn't get code parameter in callback.");
         }
 
-//        LeaderBoard leaders = new LeaderBoard();
-//        ArrayList<UsernamesEntity> userFriends;
-//        userFriends = leaders.leaderBoard(info);
+
         Session selectFriend = getSession();
         Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
         f.add(Restrictions.eq("userId", info.get(1)));
