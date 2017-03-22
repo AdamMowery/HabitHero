@@ -11,8 +11,8 @@ public class getDBSession {
     public Session getSession() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
         SessionFactory sessionFact = cfg.buildSessionFactory();
-        Session selectUsers = sessionFact.openSession();
-        selectUsers.beginTransaction();
-        return selectUsers;
+        Session select = sessionFact.openSession();
+        select.beginTransaction();
+        return select;
     }
 }
