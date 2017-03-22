@@ -144,10 +144,10 @@ public class HomeController {
         if (userList.size() == 1) {
 
             return new
-                    ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+                    ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
         }
         return new
-                ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: 0");
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: 0");
 
     }
 
