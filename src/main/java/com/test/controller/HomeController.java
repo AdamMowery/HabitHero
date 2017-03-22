@@ -68,7 +68,6 @@ public class HomeController {
 
     }
 
-
     @RequestMapping("welcome")
    /*  Displays after user logs in.
        Completes facebook connnection and gets user(id, name, email)
@@ -88,16 +87,13 @@ public class HomeController {
             session.setAttribute("Array", info);
         }
 
-        //  info = (ArrayList<String>) session.getAttribute("Array");
-
-        //   session.setAttribute("Array", info);
 
         return new
                 ModelAndView("welcome", "message", facebookConnection.getId());
     }
 
     @RequestMapping("habits")
-/*Displays after the user clicks on the habits button*/
+/*Displays after the user clicks on the Habits button*/
     public ModelAndView habits(Model model, HttpSession session) {
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
 
@@ -141,13 +137,13 @@ public class HomeController {
         model.addAttribute("tasks", taskList);
 
 
-if (userList.size() ==1) {
+        if (userList.size() == 1) {
 
-    return new
-            ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
-}
-return new
-        ModelAndView("habits","message","your id: "+info.get(1)+ " your points: 0");
+            return new
+                    ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+        }
+        return new
+                ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: 0");
 
     }
 
@@ -167,8 +163,8 @@ return new
         // searches the database where userId and taskId match the user input.
         //adds to c where user id and task id match user input
         //adds to arraylist all elements in the c list
-        c.add(Restrictions.eq("userId", userId ));
-        c.add(Restrictions.eq("taskId", taskId ));
+        c.add(Restrictions.eq("userId", userId));
+        c.add(Restrictions.eq("taskId", taskId));
 
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
@@ -192,7 +188,7 @@ return new
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
         model.addAttribute("tasks", newtaskList);
         return new
-                ModelAndView("habits", "message", "Your id: " + userId);
+                ModelAndView("Habits", "message", "Your id: " + userId);
     }
 
     @RequestMapping("deleteTask")
@@ -237,7 +233,7 @@ return new
         model.addAttribute("tasks", taskList);
 
         return new
-                ModelAndView("habits", "message", "Your id: " + userId);
+                ModelAndView("Habits", "message", "Your id: " + userId);
 
     }
 
@@ -245,7 +241,7 @@ return new
     public ModelAndView completedTask(@RequestParam("taskId") String id, Model model, HttpSession session) {
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
-        //
+
         Criteria t = tasks();
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("taskId", id));
@@ -284,7 +280,7 @@ return new
         model.addAttribute("tasks", unfinishedTasks);
 
         return new
-                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+                ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
 
     }
 
@@ -340,7 +336,7 @@ return new
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
             Criteria c = userNamelist();
-            c.add(Restrictions.eq("userId",token));
+            c.add(Restrictions.eq("userId", token));
             userList.add((UsernamesEntity) c.list().get(0));
         }
         //sorts user list by points. (method is located in the UsernamesEntity class)
@@ -351,7 +347,7 @@ return new
 
     }
 
-    //addfriends mapping
+    //Addfriends mapping
     //do something with add bar to actually add friends
 
     @RequestMapping("addfriends")
