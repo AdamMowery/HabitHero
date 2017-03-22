@@ -193,7 +193,7 @@ public class HomeController {
         selectAllTask.close();
         model.addAttribute("tasks", newtaskList);
         return new
-                ModelAndView("Habits", "message", "Your id: " + userId);
+                ModelAndView("habits", "message", "Your id: " + userId);
     }
 
     @RequestMapping("deleteTask")
@@ -242,7 +242,7 @@ public class HomeController {
         model.addAttribute("tasks", taskList);
 
         return new
-                ModelAndView("Habits", "message", "Your id: " + userId);
+                ModelAndView("habits", "message", "Your id: " + userId);
 
     }
 
@@ -295,7 +295,7 @@ public class HomeController {
         model.addAttribute("tasks", unfinishedTasks);
 
         return new
-                ModelAndView("Habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
+                ModelAndView("habits", "message", "your id: " + info.get(1) + " your points: " + userList.get(0).getPoints());
 
     }
 
