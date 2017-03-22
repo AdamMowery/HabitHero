@@ -76,11 +76,9 @@ public class Addfriends extends getDBSession{
                 SessionFactory sessionFact = cfg.buildSessionFactory();
                 Session s = sessionFact.openSession();
                 Transaction tx = s.beginTransaction();
-
                 MasterfriendsEntity newfriend = new MasterfriendsEntity();
                 newfriend.setUserId(info.get(1));
                 newfriend.setFriendId(id);
-
                 //this saves the object into the database, writes to DB, C in Crud for CREATE
                 s.save(newfriend);
                 tx.commit();

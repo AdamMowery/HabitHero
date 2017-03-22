@@ -56,6 +56,7 @@ public class LeaderBoard extends getDBSession {
             Criteria c = findinfo.createCriteria(UsernamesEntity.class);
             c.add(Restrictions.eq("userId", token));
             userList.add((UsernamesEntity) c.list().get(0));
+            findinfo.close();
         }
         //sorts user list by points. (method is located in the UsernamesEntity class)
         Collections.sort(userList);
