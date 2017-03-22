@@ -49,7 +49,7 @@ public class HomeController {
                 ModelAndView("about", "message", "");
 
     }
-    //TODO consolidate about pages
+
     @RequestMapping("aboutPreLogin")
 // Displays aboutPreLogin .jsp .
     public ModelAndView aboutPageBeforeLoggingIn() {
@@ -58,6 +58,16 @@ public class HomeController {
                 ModelAndView("aboutPreLogin", "message", "");
 
     }
+
+    @RequestMapping("challenges")
+// Displays aboutPreLogin .jsp .
+    public ModelAndView challenges() {
+
+        return new
+                ModelAndView("challenges", "message", "");
+
+    }
+
 
     @RequestMapping("welcome")
    /*  Displays after user logs in.
