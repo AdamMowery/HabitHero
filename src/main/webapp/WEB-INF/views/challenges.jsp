@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -9,12 +11,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Habit Hero Theme</title>
+    <title>Challenges</title>
 
     <!-- Bootstrap Core CSS -->
-    <!-- HAD TO ADD "../rescources/" to all hrefs to make them work
-    after pasting bootstrap template into the resources folder under webapp-->
-
     <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Theme CSS -->
@@ -22,7 +21,6 @@
 
 
     <!-- Custom Fonts -->
-
     <link href="../resources/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
@@ -34,39 +32,45 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
 </head>
 
-<body id="page-top" style="background-color: #4FA4FF" class="index">
+<body id="page-top" class="index text-center">
 <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
-<!-- Navigation TOP BAR-->
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+<!-- Navigation -->
+<nav id="mainNav" class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
     <div class="container">
-        <!-- This button appears if screen is small or on mobile so that the links aren't hidden completely -->
+        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header page-scroll">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-
-
             <a class="navbar-brand" href="#page-top">HABIT HERO</a>
-            <!-- TODO: Figure out how to get this on the left of the habit hero text instead of the right-->
-            <img align="center" style="margin-top: 5px; margin-left: 5px;" class="img-responsive" height="40em" width="40em" src="../resources/img/logoinverted.png" alt="">
         </div>
 
-        <!-- All link elements -->
+        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="hidden">
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="PrivacyPolicy">PrivacyPolicy</a>
+                    <a href="leaderboard">LEADERBOARD</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="habits">HABITS</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="addfriends">ADD FRIENDS</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="challenges">CHALLENGES</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="about">ABOUT</a>
                 </li>
 
-                <li class="page-scroll">
-                    <a href="aboutPreLogin">ABOUT</a>
-                </li>
 
 
             </ul>
@@ -76,31 +80,36 @@
     <!-- /.container-fluid -->
 </nav>
 
+
 <!-- Header -->
-<header>
-    <div class="container" style="background-color: #4FA4FF; display: inline-block; text-align: center" id="maincontent" tabindex="-1">
+<header style="background-color: #2B3B50" class="text-center">
 
 
-            <img class="img-responsive" height="300em" width="300em" src="../resources/img/portfolio/mascot1.png" alt="">
-            <div class="intro-text">
-                <h1 class="name">HABIT HERO</h1>
-                <hr class="star-light" style="background-color: #0DB1FF">
-                <span class="skills">Gamifying your habits by competing with friends.</span>
+    <!-- About Section -->
+    <section style="background-color: #50A1FF; " class="success text-center" id="leaderboard">
+        <h2>LEADERBOARD</h2>
+        <hr class="star-light">
+        <div class="leaderboard" style="padding-left: 25em;">
+            <div class="text-center">
+                <div class="text-center">
+                    <h1 style="align: center; margin-left: 5em; margin-right 5em">
+                        We're working on a system where you can challenge a friend 1-on-1 to compete in the same habit over the course of a month. It's coming soon!
+                    </h1>
+
+                    <br/>
+                    <br/>
+                </div>
+
             </div>
 
-
-            <!-- when button is clicked, href to the message -->
-
-            <a href="${message}" class="btn btn-lg btn-outline col-lg-8 col-lg-offset-2 text-center" style="color: #ffffff;  align: center;">LOGIN</a>
-
-
-
-    </div>
+        </div>
+    </section>
 </header>
 
+
 <!-- Footer -->
-<footer class="text-center" style="background-color: #2C3D51">
-    <div class="footer-above" style="background-color: #2C3D51">
+<footer class="text-center">
+    <div class="footer-above">
         <div class="container">
             <div class="row">
                 <div class="footer-col col-md-4">
@@ -141,13 +150,13 @@
         </div>
 </footer>
 
-
 <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
 <div class="scroll-top page-scroll hidden-sm hidden-xs hidden-lg hidden-md">
     <a class="btn btn-primary" href="#page-top">
         <i class="fa fa-chevron-up"></i>
     </a>
 </div>
+
 
 <!-- jQuery -->
 <script src="../resources/vendor/jquery/jquery.min.js"></script>

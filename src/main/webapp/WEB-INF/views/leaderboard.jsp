@@ -46,7 +46,11 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
+
+
             <a class="navbar-brand" href="#page-top">HABIT HERO</a>
+
+            <img align="center" style="margin-top: 5px; margin-left: 5px;" class="img-responsive" height="40em" width="40em" src="../resources/img/logoinverted.png" alt="">
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -56,20 +60,24 @@
                     <a href="#page-top"></a>
                 </li>
                 <li class="page-scroll">
-                    <a href="habits">HABITS</a>
+                    <a href="leaderboard">LEADERBOARD</a>
                 </li>
 
                 <li class="page-scroll">
-                    <a href="leaderboard">LEADERBOARD</a>
+                    <a href="habits">HABITS</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="addfriends">ADD FRIENDS</a>
+                </li>
+                <li class="page-scroll">
+                    <a href="challenges">CHALLENGES</a>
                 </li>
 
                 <li class="page-scroll">
                     <a href="about">ABOUT</a>
                 </li>
 
-                <li class="page-scroll">
-                    <a href="addfriends">ADD FRIENDS</a>
-                </li>
+
 
 
             </ul>
@@ -86,20 +94,21 @@
 
     <!-- About Section -->
     <section style="background-color: #50A1FF; " class="success text-center" id="leaderboard">
-        <h2>LEADERBOARD</h2>
+        <h2 style="margin-top: 2em;">LEADERBOARD</h2>
         <hr class="star-light">
-        <div class="leaderboard" style="padding-left: 25em;">
-            <div class="text-center">
-                <div class="text-center">
-                    <table border="1">
+        <div style="text-align: center;">
+            <div class="text-center" style="text-align: center;">
+                <div class="text-center"  style="border-radius: 10px; -webkit-border-radius: 10px; padding: 10px; margin-left: 10em; margin-right: 10em; -moz-border-radius: 10px;" align="center">
+                    <table  align="center">
 
-                        <tr>
+                        <tr style="text-align: center; font-size: 24px; padding: 10px; margin: 10px;" align="center">
 
-                            <th>name</th>
-                            <th>points</th>
+                            <th style="text-align: center" align="center">NAME</th>
+                            <th style="text-align: center" align = "center">POINTS</th>
                         </tr>
+
                         <c:forEach var="friend" items="${message}">
-                            <tr>
+                            <tr style="font-size: 16px; padding: 10px; margin: 10px">
                                 <td>${friend.fullname}</td>
                                 <td>${friend.points}</td>
 
@@ -128,7 +137,8 @@
                 <div class="footer-col col-md-4">
                     <h3>Location</h3>
                     <p>
-                        <br>Detroit, Michigan</p>
+                        <br>
+                        Detroit, Michigan</p>
                 </div>
                 <div class="footer-col col-md-4">
                     <h3>Around the Web</h3>

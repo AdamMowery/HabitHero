@@ -39,102 +39,109 @@
 <body id="page-top" class="index text-center">
 
 
+    <div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
 
-<div id="skipnav"><a href="#maincontent">Skip to main content</a></div>
-
-<!-- Navigation -->
-<nav id="mainNav" class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand" href="#page-top">HABIT HERO</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li class="page-scroll">
-                    <a href="habits">HABITS</a>
-                </li>
-
-                <li class="page-scroll">
-                    <a href="leaderboard">LEADERBOARD</a>
-                </li>
-
-                <li class="page-scroll">
-                    <a href="about">ABOUT</a>
-                </li>
-
-                <li class="page-scroll">
-                    <a href="addfriends">ADD FRIENDS</a>
-                </li>
-
-
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
-
-
-<!-- Header -->
-<header style="background-color: #2B3B50" class="text-center">
-
-    <section style="background-color: #50A1FF; " class="success text-center" id="newhabit">
-
-
-
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default text-center navbar-fixed-top navbar-custom">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h3>${message}</h3>
-                    <h2>Create new Habit</h2>
-                    <h3>Add a new habit here. </h3>
-                    <hr class="star-light" style = "color: #ffffff" >
-                </div>
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+
+
+                <a class="navbar-brand" href="#page-top">HABIT HERO</a>
+
+                <img align="center" style="margin-top: 5px; margin-left: 5px;" class="img-responsive" height="40em" width="40em" src="../resources/img/logoinverted.png" alt="">
             </div>
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
 
-                    <form action="addTask" style = "color: #2B3B50" method="post">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="leaderboard">LEADERBOARD</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="habits">HABITS</a>
+                    </li>
 
-                        Enter a new task<input type="text" style = "color: #2B3B50" name="task">
-                        <input type="submit" style = "color: #2B3B50" value="Add">
-                    </form>
 
-                </div>
+                    <li class="page-scroll">
+                        <a href="addfriends">ADD FRIENDS</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="challenges">CHALLENGES</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="about">ABOUT</a>
+                    </li>
+
+
+                </ul>
             </div>
-            <h3 class="text-center">
-                YOUR CURRENT HABITS ARE
-            </h3>
-            <table border="2" style = "color: #FFFFFF; text-color: #FFFFFF; padding-left: 5em; margin-left: 15em;" class="success text-center">
-
-                <tr style = "color: #FFFFFF;" class = "success text-center">
-
-                    <th style = "color: #FFFFFF;" class = "success text-center">Task</th>
-                    <th style = "color: #FFFFFF;" class = "success text-center">Complete</th>
-                    <th style = "color: #FFFFFF;" class = "success text-center">Delete a task</th>
-                </tr>
-                <c:forEach var="task" items="${tasks}">
-                <tr style = "color: #FFFFFF;" class = "success text-center">
-                    <td style = "color: #FFFFFF;" class = "success text-center">${task.taskId}</td>
-                    <td style = "color: #FFFFFF;" class = "success text-center"><a href="complete?taskId=${task.taskId}" style = "color: #2B3B50; text-decoration: underline;" > Complete </a></td>
-                    <td style = "color: #FFFFFF;" class = "success text-center"><a href="deleteTask?taskId=${task.taskId}" style = "color: #2B3B50; text-decoration: underline;"> Delete </a></td>
-                </tr>
-                </c:forEach>
-            </table>
-
+            <!-- /.navbar-collapse -->
         </div>
+        <!-- /.container-fluid -->
+    </nav>
 
-    </section>
-</header>
+
+    <!-- Header -->
+    <header style="background-color: #2B3B50; margin-top: -3em;" class="text-center" >
+
+        <section style="background-color: #50A1FF; " class="success text-center" id="newhabit" >
+
+
+            <div class="container" align = "center">
+                <div class="row" align="center">
+                    <div class="col-lg-12 text-center" align="center">
+
+                        <h2 style = "margin-top: -1em;">Create new Habit</h2>
+                        <h3>Add a new habit here. </h3>
+                        <hr class="star-light" style="color: #ffffff">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2">
+
+                        <form action="addTask" style="color: #2B3B50" method="post">
+
+                            <span style="color: #ffffff">Enter a new task  </span><input type="text" style="color: #2B3B50" name="task">
+                            <input type="submit" style="color: #2B3B50" value="Add">
+                        </form>
+
+                    </div>
+                </div>
+                <h3 class="text-center">
+                    YOUR CURRENT HABITS ARE
+                </h3>
+                <table  align="center" style="color: #FFFFFF; text-color: #FFFFFF;" class="success text-center">
+
+                    <tr  align="center" style="color: #FFFFFF; font-size: 24px;" class="success text-center">
+
+                        <th  align="center" style="color: #FFFFFF;" class="success text-center">TASK</th>
+                        <th  align="center" style="color: #FFFFFF; margin: 5px;" class="success text-center">COMPLETE</th>
+                        <th  align="center" style="color: #FFFFFF; margin: 5px;" class="success text-center">REMOVE</th>
+                    </tr>
+                    <c:forEach var="task" items="${tasks}">
+                        <tr style="color: #FFFFFF; font-size: 16px;" class="success text-center">
+                            <td style="color: #FFFFFF; margin: 5px;" class="success text-center">${task.taskId}</td>
+                            <td style="color: #FFFFFF; margin: 5px;" class="success text-center"><a href="complete?taskId=${task.taskId}" style="color: #2B3B50; text-decoration: underline;"> COMPLETE </a></td>
+                            <td style="color: #FFFFFF; margin: 5px;" class="success text-center"><a href="deleteTask?taskId=${task.taskId}" style="color: #2B3B50; text-decoration: underline;"> DELETE </a></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <br>
+                <br>
+                <h4>${message}</h4>
+
+            </div>
+
+        </section>
+    </header>
 
 </body>
 
@@ -200,7 +207,6 @@
 
 <!-- Theme JavaScript -->
 <script src="../resources/js/freelancer.min.js"></script>
-
 
 
 </html>
