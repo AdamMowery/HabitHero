@@ -172,8 +172,8 @@ return new
 
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
 
-//  *********** add task to database if not already there ******
-        if (taskList.size() == 0) {
+//  *********** add task to database if not already there and not a empty string ******
+        if (taskList.size() == 0 && !taskId.equals("")) {
             Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
             SessionFactory sessionFact = cfg.buildSessionFactory();
             Session s = sessionFact.openSession();
