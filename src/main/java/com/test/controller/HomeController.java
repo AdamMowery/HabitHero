@@ -107,10 +107,11 @@ public class HomeController {
 
 //    ********* array list of users**************
 // userNamelist creates connection with the database
-        Criteria c = userNamelist();
+        Session selectUsers = getSession();
+        Criteria c = selectUsers.createCriteria(UsernamesEntity.class);
         c.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
-
+        selectUsers.close();
 //  *********** add user to database if not already there ******
 //
         if (userList.size() == 0) {
@@ -129,10 +130,13 @@ public class HomeController {
         }
 //   ******* Displays Table of tasks *********
 // the tasks method gets the tasks table and displays as an array
-        Criteria t = tasks();
+        Session selectTask = getSession();
+        Criteria t = selectTask.createCriteria(TasksEntity.class);
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
+        selectTask.close();
+
         // adds the taskList attribute to the model tasks
         model.addAttribute("tasks", taskList);
 
@@ -157,16 +161,15 @@ public class HomeController {
             throw new RuntimeException(
                     "ERROR:Didn't get code parameter in callback.");
         }
-
-        Criteria c = tasks();
-
         // searches the database where userId and taskId match the user input.
         //adds to c where user id and task id match user input
         //adds to arraylist all elements in the c list
+        Session selectTask = getSession();
+        Criteria c = selectTask.createCriteria(TasksEntity.class);
         c.add(Restrictions.eq("userId", userId));
         c.add(Restrictions.eq("taskId", taskId));
-
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) c.list();
+        selectTask.close();
 
 //  *********** add task to database if not already there and not a empty string ******
         if (taskList.size() == 0 && !taskId.equals("")) {
@@ -182,10 +185,12 @@ public class HomeController {
             s.close();
         }
         //displays updated task list
-        Criteria t = tasks();
+        Session selectAllTask = getSession();
+        Criteria t = selectAllTask.createCriteria(TasksEntity.class);
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> newtaskList = (ArrayList<TasksEntity>) t.list();
+        selectAllTask.close();
         model.addAttribute("tasks", newtaskList);
         return new
                 ModelAndView("Habits", "message", "Your id: " + userId);
@@ -195,7 +200,7 @@ public class HomeController {
     /*
     Deletes a tasks. No points awarded to user
      */
-    public ModelAndView deleteCustomer(@RequestParam("taskId") String id, Model model, HttpSession session) {
+    public ModelAndView deleteTask(@RequestParam("taskId") String id, Model model, HttpSession session) {
 // gets Http session. What is the "Array"?
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
 // gets  the info at index 0 which is the userId
@@ -226,10 +231,14 @@ public class HomeController {
 
         tasks.getTransaction().commit();
 
-        Criteria t = tasks();
+        tasks.close();
+
+        Session selectTask = getSession();
+        Criteria t = selectTask.createCriteria(TasksEntity.class);
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> taskList = (ArrayList<TasksEntity>) t.list();
+        selectTask.close();
         model.addAttribute("tasks", taskList);
 
         return new
@@ -242,14 +251,18 @@ public class HomeController {
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
 
-        Criteria t = tasks();
+        Session selectTask = getSession();
+        Criteria t = selectTask.createCriteria(TasksEntity.class);
         t.add(Restrictions.eq("userId", info.get(1)));
         t.add(Restrictions.eq("taskId", id));
         ArrayList<TasksEntity> completedTask = (ArrayList<TasksEntity>) t.list();
+        selectTask.close();
 
-        Criteria c = userNamelist();
+        Session selectUsers = getSession();
+        Criteria c = selectUsers.createCriteria(UsernamesEntity.class);
         c.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
+        selectUsers.close();
 
         if (completedTask.size() == 1) {
             completedTask.get(0).setCompleted(1);
@@ -273,10 +286,12 @@ public class HomeController {
             sessio.close();
         }
 
-        Criteria u = tasks();
+        Session selectAllTask = getSession();
+        Criteria u = selectAllTask.createCriteria(TasksEntity.class);
         u.add(Restrictions.eq("userId", info.get(1)));
         u.add(Restrictions.eq("completed", 0));
         ArrayList<TasksEntity> unfinishedTasks = (ArrayList<TasksEntity>) u.list();
+        selectAllTask.close();
         model.addAttribute("tasks", unfinishedTasks);
 
         return new
@@ -284,10 +299,7 @@ public class HomeController {
 
     }
 
-    private Criteria userNamelist() {
-        Session selectUsers = getSession();
-        return selectUsers.createCriteria(UsernamesEntity.class);
-    }
+
 
     private Session getSession() {
         Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
@@ -297,15 +309,7 @@ public class HomeController {
         return selectUsers;
     }
 
-    private Criteria tasks() {
-        Session selectTask = getSession();
-        return selectTask.createCriteria(TasksEntity.class);
-    }
 
-    private Criteria friends() {
-        Session selectTask = getSession();
-        return selectTask.createCriteria(MasterfriendsEntity.class);
-    }
 
     @RequestMapping("leaderboard")
 
@@ -321,10 +325,12 @@ public class HomeController {
 //        LeaderBoard leaders = new LeaderBoard();
 //        ArrayList<UsernamesEntity> userFriends;
 //        userFriends = leaders.leaderBoard(info);
-
-        Criteria f = friends();
+        Session selectFriend = getSession();
+        Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
         f.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        selectFriend.close();
+
         ArrayList<String> userFriends = new ArrayList<>();
         //search for friends for a given userId
         for (int i = 0; i < friendsList.size(); i++) {
@@ -335,7 +341,8 @@ public class HomeController {
 
         //get all of the user info(points, name, id , email)
         for (String token : userFriends) {
-            Criteria c = userNamelist();
+            Session findinfo = getSession();
+            Criteria c = findinfo.createCriteria(UsernamesEntity.class);
             c.add(Restrictions.eq("userId", token));
             userList.add((UsernamesEntity) c.list().get(0));
         }
@@ -354,9 +361,11 @@ public class HomeController {
     public ModelAndView addFriendsPage(HttpSession session) {
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
-        Criteria f = friends();
+        Session selectFriend = getSession();
+        Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
         f.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        selectFriend.close();
         ArrayList<String> userFriends = new ArrayList<>();
         //search for friends for a given userId
         for (int i = 0; i < friendsList.size(); i++) {
@@ -364,27 +373,39 @@ public class HomeController {
         }
         ArrayList<UsernamesEntity> userList = new ArrayList<>();
         //get all of the user info(points, name, id , email)
-        for (String token : userFriends) {
-            Criteria c = userNamelist();
-            c.add(Restrictions.eq("userId", token));
-            userList.add((UsernamesEntity) c.list().get(0));
-        }
+        getUserInfo(userFriends, userList);
 
         return new
                 ModelAndView("addFriends", "friends", userList);
+    }
+
+    private void getUserInfo(ArrayList<String> userFriends, ArrayList<UsernamesEntity> userList) {
+        for (String token : userFriends) {
+            Session findinfo = getSession();
+            Criteria c = findinfo.createCriteria(UsernamesEntity.class);
+            c.add(Restrictions.eq("userId", token));
+            userList.add((UsernamesEntity) c.list().get(0));
+            findinfo.close();
+        }
     }
 
     @RequestMapping("addFriendButton")
     public ModelAndView addFriendButton(@RequestParam("userid") String id, HttpSession session) {
 
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
-        Criteria c = userNamelist();
+
+        Session selectUsers = getSession();
+        Criteria c = selectUsers.createCriteria(UsernamesEntity.class);
         c.add(Restrictions.eq("userId", id));
         ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
+        selectUsers.close();
 
-        Criteria f = friends();
+        Session selectFriend = getSession();
+        Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
         f.add(Restrictions.eq("userId", id));
         ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+        selectFriend.close();
+
         if (friendsList.size() == 0 && userList.size() == 1) {
             if (!id.equals(info.get(1))) {
                 Configuration cfg = new Configuration().configure("hibernate.cfg.xml");
@@ -404,9 +425,11 @@ public class HomeController {
         }
 
         //redisplays friends table with added friend
-        Criteria g = friends();
+        Session selectAllFriend = getSession();
+        Criteria g = selectAllFriend.createCriteria(MasterfriendsEntity.class);
         g.add(Restrictions.eq("userId", info.get(1)));
         ArrayList<MasterfriendsEntity> friendsList2 = (ArrayList<MasterfriendsEntity>) g.list();
+        selectAllFriend.close();
         ArrayList<String> userFriends = new ArrayList<>();
         //search for friends for a given userId
         for (int i = 0; i < friendsList2.size(); i++) {
@@ -414,11 +437,7 @@ public class HomeController {
         }
         ArrayList<UsernamesEntity> userList2 = new ArrayList<>();
         //get all of the user info(points, name, id , email)
-        for (String token : userFriends) {
-            Criteria d = userNamelist();
-            d.add(Restrictions.eq("userId", token));
-            userList2.add((UsernamesEntity) d.list().get(0));
-        }
+        getUserInfo(userFriends, userList2);
 
         return new
                 ModelAndView("addFriends", "friends", userList2);
