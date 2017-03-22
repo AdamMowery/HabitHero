@@ -373,13 +373,6 @@ public class HomeController {
         }
         ArrayList<UsernamesEntity> userList = new ArrayList<>();
         //get all of the user info(points, name, id , email)
-        getUserInfo(userFriends, userList);
-
-        return new
-                ModelAndView("addFriends", "friends", userList);
-    }
-
-    private void getUserInfo(ArrayList<String> userFriends, ArrayList<UsernamesEntity> userList) {
         for (String token : userFriends) {
             Session findinfo = getSession();
             Criteria c = findinfo.createCriteria(UsernamesEntity.class);
@@ -387,6 +380,9 @@ public class HomeController {
             userList.add((UsernamesEntity) c.list().get(0));
             findinfo.close();
         }
+
+        return new
+                ModelAndView("addFriends", "friends", userList);
     }
 
     @RequestMapping("addFriendButton")
@@ -437,7 +433,13 @@ public class HomeController {
         }
         ArrayList<UsernamesEntity> userList2 = new ArrayList<>();
         //get all of the user info(points, name, id , email)
-        getUserInfo(userFriends, userList2);
+        for (String token : userFriends) {
+            Session findinfo = getSession();
+            Criteria t = findinfo.createCriteria(UsernamesEntity.class);
+            t.add(Restrictions.eq("userId", token));
+            userList2.add((UsernamesEntity) t.list().get(0));
+            findinfo.close();
+        }
 
         return new
                 ModelAndView("addFriends", "friends", userList2);
