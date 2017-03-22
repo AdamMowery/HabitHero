@@ -4,9 +4,6 @@ import com.test.models.TasksEntity;
 import com.test.models.UsernamesEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,13 +47,10 @@ public class CompleteTask extends getDBSession{
             s.getTransaction().commit();
             s.close();
 
-            Configuration cf = new Configuration().configure("hibernate.cfg.xml");
-            SessionFactory sessionFac = cf.buildSessionFactory();
-            Session sessio = sessionFac.openSession();
-            Transaction tc = sessio.beginTransaction();
-            sessio.update(completedTask.get(0));
-            tc.commit();
-            sessio.close();
+            Session p = getSession();
+            p.update(completedTask.get(0));
+            p.getTransaction().commit();
+            p.close();
         }
 
         Session selectAllTask = getSession();

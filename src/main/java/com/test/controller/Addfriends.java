@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by adamm on 3/22/2017.
  */
 @Controller
-public class Addfriends extends getDBSession{
+public class Addfriends extends FriendInfo {
 
 
     //Addfriends mapping
@@ -36,15 +36,8 @@ public class Addfriends extends getDBSession{
         for (int i = 0; i < friendsList.size(); i++) {
             userFriends.add(friendsList.get(i).getFriendId());
         }
-        ArrayList<UsernamesEntity> userList = new ArrayList<>();
-        //get all of the user info(points, name, id , email)
-        for (String token : userFriends) {
-            Session findinfo = getSession();
-            Criteria c = findinfo.createCriteria(UsernamesEntity.class);
-            c.add(Restrictions.eq("userId", token));
-            userList.add((UsernamesEntity) c.list().get(0));
-            findinfo.close();
-        }
+        ArrayList<UsernamesEntity> userList = getInfo(userFriends);
+
 
         return new
                 ModelAndView("addFriends", "friends", userList);
@@ -91,15 +84,7 @@ public class Addfriends extends getDBSession{
         for (int i = 0; i < friendsList2.size(); i++) {
             userFriends.add(friendsList2.get(i).getFriendId());
         }
-        ArrayList<UsernamesEntity> userList2 = new ArrayList<>();
-        //get all of the user info(points, name, id , email)
-        for (String token : userFriends) {
-            Session findinfo = getSession();
-            Criteria t = findinfo.createCriteria(UsernamesEntity.class);
-            t.add(Restrictions.eq("userId", token));
-            userList2.add((UsernamesEntity) t.list().get(0));
-            findinfo.close();
-        }
+        ArrayList<UsernamesEntity> userList2 = getInfo(userFriends);
 
         return new
                 ModelAndView("addFriends", "friends", userList2);
