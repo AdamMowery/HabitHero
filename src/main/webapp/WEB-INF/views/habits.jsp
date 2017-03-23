@@ -146,8 +146,6 @@
 </body>
 
 <!-- Footer -->
-<!-- COMMENTED OUT THIS THING BECAUSE IT WASN"T SHOWING UP IN THE RIGHT SPOT
-//TODO PUT THIS BACK AT THE BOTTOM OF THIS PAGE
 <footer class="text-center">
     <div class="footer-above">
         <div class="container">
@@ -188,8 +186,9 @@
                 </div>
             </div>
         </div>
+    </div>
 </footer>
--->
+
 
 
 <!-- jQuery -->

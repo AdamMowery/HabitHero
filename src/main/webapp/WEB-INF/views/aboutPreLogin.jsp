@@ -176,6 +176,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </footer>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
