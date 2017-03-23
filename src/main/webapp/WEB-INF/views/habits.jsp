@@ -118,13 +118,15 @@
                 <h3 class="text-center">
                     YOUR CURRENT HABITS ARE
                 </h3>
+                <br>
+                <br>
                 <table  align="center" style="color: #FFFFFF; text-color: #FFFFFF;" class="success text-center">
 
                     <tr  align="center" style="color: #FFFFFF; font-size: 24px;" class="success text-center">
 
-                        <th  align="center" style="color: #FFFFFF;" class="success text-center">TASK</th>
-                        <th  align="center" style="color: #FFFFFF; margin: 5px;" class="success text-center">COMPLETE</th>
-                        <th  align="center" style="color: #FFFFFF; margin: 5px;" class="success text-center">REMOVE</th>
+                        <th  align="center" style="color: #FFFFFF; margin: 5px; padding: 10px;" class="success text-center">TASK</th>
+                        <th  align="center" style="color: #FFFFFF; margin: 5px; padding: 10px;" class="success text-center">COMPLETE</th>
+                        <th  align="center" style="color: #FFFFFF; margin: 5px; padding: 10px;" class="success text-center">REMOVE</th>
                     </tr>
                     <c:forEach var="task" items="${tasks}">
                         <tr style="color: #FFFFFF; font-size: 16px;" class="success text-center">

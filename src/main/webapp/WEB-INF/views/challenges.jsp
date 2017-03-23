@@ -87,14 +87,14 @@
 
     <!-- About Section -->
     <section style="background-color: #50A1FF; " class="success text-center" id="leaderboard">
-        <h2>LEADERBOARD</h2>
+        <h2 style="margin-top: 2em;">CHALLENGES</h2>
         <hr class="star-light">
-        <div class="leaderboard" style="padding-left: 25em;">
-            <div class="text-center">
-                <div class="text-center">
-                    <h1 style="align: center; margin-left: 5em; margin-right 5em">
+        <div class="leaderboard" style="" align="center">
+            <div align="center" class="text-center">
+                <div align="center" class="text-center">
+                    <h4 align="center" style="margin-left: 7em; margin-right: 7em">
                         We're working on a system where you can challenge a friend 1-on-1 to compete in the same habit over the course of a month. It's coming soon!
-                    </h1>
+                    </h4>
 
                     <br/>
                     <br/>

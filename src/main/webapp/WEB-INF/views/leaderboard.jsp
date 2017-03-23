@@ -103,8 +103,8 @@
 
                         <tr style="text-align: center; font-size: 24px; padding: 10px; margin: 10px;" align="center">
 
-                            <th style="text-align: center" align="center">NAME</th>
-                            <th style="text-align: center" align = "center">POINTS</th>
+                            <th style="text-align: center; margin: 5px; padding: 10px;" align="center">NAME</th>
+                            <th style="text-align: center; margin: 5px; padding: 10px;" align = "center">POINTS</th>
                         </tr>
 
                         <c:forEach var="friend" items="${message}">
