@@ -1,5 +1,9 @@
 package com.test.controller;
 
+import com.test.models.UsernamesEntity;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,20 +12,20 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 @Controller
-public class HomeController {
+public class HomeController extends getDBSession {
 
     @RequestMapping("/")
-/// Connects to facebook just to get a authorization code.Displays landing page with login button. Nothing is displayed in message.
+
     public ModelAndView landingPage() {
+        //starts the facebook connection to get auth code
         FBConnection fbConnection = new FBConnection();
 
         return new
                 ModelAndView("landing", "message", fbConnection.getFBAuthUrl());
-
     }
 
     @RequestMapping("PrivacyPolicy")
-// Displays PrivacyPolicy .jsp . Don't need to log in to see page
+
     public ModelAndView viewPrivacyPolicy() {
 
         return new
@@ -30,7 +34,7 @@ public class HomeController {
     }
 
     @RequestMapping("about")
-// Displays about .jsp . Don't need to log in to see page
+
     public ModelAndView aboutPage() {
 
         return new
@@ -39,7 +43,7 @@ public class HomeController {
     }
 
     @RequestMapping("aboutPreLogin")
-// Displays aboutPreLogin .jsp .
+
     public ModelAndView aboutPageBeforeLoggingIn() {
 
         return new
@@ -48,7 +52,7 @@ public class HomeController {
     }
 
     @RequestMapping("challenges")
-// Displays aboutPreLogin .jsp .
+
     public ModelAndView challenges() {
 
         return new
@@ -57,11 +61,10 @@ public class HomeController {
     }
 
     @RequestMapping("welcome")
-   /*  Displays after user logs in.
-       Completes facebook connnection and gets user(id, name, email)
-       Also starts Session
-    */
+
     public ModelAndView welcome(@RequestParam("code") String code, HttpSession session) {
+
+        //finishes the facebook connection to get all the user information
         ArrayList<String> info = new ArrayList<>();
         FacebookConnection facebookConnection = new FacebookConnection(code);
         facebookConnection.invoke();
@@ -73,6 +76,26 @@ public class HomeController {
         // if session object that holds user info is empty, a new session is created.
         if (session.getAttribute("Array") == null) {
             session.setAttribute("Array", info);
+        }
+
+        // searches the database to make sure the user isn't already a member
+        Session selectUsers = getSession();
+        Criteria c = selectUsers.createCriteria(UsernamesEntity.class);
+        c.add(Restrictions.eq("userId", info.get(1)));
+        ArrayList<UsernamesEntity> userList = (ArrayList<UsernamesEntity>) c.list();
+        selectUsers.close();
+
+        // add user to database if not already there
+        if (userList.size() == 0) {
+            Session s = getSession();
+            UsernamesEntity newuser = new UsernamesEntity();
+            newuser.setUserId(info.get(1));
+            newuser.setFullname(info.get(2));
+            newuser.setEmail(info.get(3));
+            newuser.setPoints(0);
+            s.save(newuser);
+            s.getTransaction().commit();
+            s.close();
         }
 
 

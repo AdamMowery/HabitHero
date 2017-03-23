@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
@@ -18,32 +17,27 @@ import java.util.ArrayList;
  */
 @Controller
 public class DeleteTask extends getDBSession {
+
+
     @RequestMapping("deleteTask")
-    /*
-    Deletes a tasks. No points awarded to user
-     */
+
     public ModelAndView deleteTask(@RequestParam("taskId") String id, Model model, HttpSession session) {
-// gets Http session. What is the "Array"?
+
+        // Checks to see if the user is logged in
+        if (!session.getAttribute("Array").equals(null)) {
+        // gets the current session of the user information array
         ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
-// gets  the info at index 0 which is the userId
-        String userId = info.get(1);
-//returns the code which stored at index 0 of the info arrray
-        String code = info.get(0);
-        if (code == null || code.equals("")) {
-            throw new RuntimeException(
-                    "ERROR:Didn't get code parameter in callback.");
-        }
 
-
+        //deletes the task from the database
         Session s = getSession();
-
         TasksEntity temp = new TasksEntity();
         temp.setTaskId(id);
-        temp.setUserId(userId);
+        temp.setUserId(info.get(1));
         s.delete(temp);
         s.getTransaction().commit();
         s.close();
 
+        //gets the updated task list to display
         Session selectTask = getSession();
         Criteria t = selectTask.createCriteria(TasksEntity.class);
         t.add(Restrictions.eq("userId", info.get(1)));
@@ -53,7 +47,12 @@ public class DeleteTask extends getDBSession {
         model.addAttribute("tasks", taskList);
 
         return new
-                ModelAndView("habits", "message", "Your id: " + userId);
+                ModelAndView("habits", "message", "Your id: " + info.get(1));
+
+        } else {
+            return new
+                    ModelAndView("/", "message", "please login");
+        }
 
     }
 

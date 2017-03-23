@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,38 +24,39 @@ public class LeaderBoard extends FriendInfo {
 
     public ModelAndView leading(HttpSession session) {
 
-        ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
-        String code = info.get(0);
-        if (code == null || code.equals("")) {
-            throw new RuntimeException(
-                    "ERROR:Didn't get code parameter in callback.");
+        // Checks to see if the user is logged in
+        if (!session.getAttribute("Array").equals(null)) {
+            // gets the current session of the user information array
+            ArrayList<String> info = (ArrayList<String>) session.getAttribute("Array");
+
+            //gets a list of all the users friends
+            Session selectFriend = getSession();
+            Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
+            f.add(Restrictions.eq("userId", info.get(1)));
+            ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
+            selectFriend.close();
+
+            //search for friends for a given userId
+            ArrayList<String> userFriends = new ArrayList<>();
+            for (int i = 0; i < friendsList.size(); i++) {
+                userFriends.add(friendsList.get(i).getFriendId());
+            }
+            userFriends.add(info.get(1));
+
+            //gets all the information on each friend
+            ArrayList<UsernamesEntity> userList = getInfo(userFriends);
+
+            //sorts user list by points
+            Collections.sort(userList);
+
+            return new
+                    ModelAndView("leaderboard", "message", userList);
+        } else {
+            return new
+                    ModelAndView("/", "message", "please login");
         }
-
-
-        Session selectFriend = getSession();
-        Criteria f = selectFriend.createCriteria(MasterfriendsEntity.class);
-        f.add(Restrictions.eq("userId", info.get(1)));
-        ArrayList<MasterfriendsEntity> friendsList = (ArrayList<MasterfriendsEntity>) f.list();
-        selectFriend.close();
-
-        ArrayList<String> userFriends = new ArrayList<>();
-        //search for friends for a given userId
-        for (int i = 0; i < friendsList.size(); i++) {
-            userFriends.add(friendsList.get(i).getFriendId());
-        }
-        userFriends.add(info.get(1));
-
-
-        ArrayList<UsernamesEntity> userList = getInfo(userFriends);
-        //sorts user list by points. (method is located in the UsernamesEntity class)
-        Collections.sort(userList);
-
-        return new
-                ModelAndView("leaderboard", "message", userList);
 
     }
-
-
 
 
 }

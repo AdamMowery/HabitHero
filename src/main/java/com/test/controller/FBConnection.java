@@ -11,16 +11,16 @@ import java.net.URLConnection;
  * Created by adamm on 3/13/2017.
  */
 
-//
-public class FBConnection implements FBLogin {
-    public static final String FB_APP_ID = FBLogin.FB_APP_ID;
-    public static final String FB_APP_SECRET = FBLogin.FB_APP_SECRET;
-    public static final String REDIRECT_URI = "http://localhost:8080/welcome";
+class FBConnection implements FBLogin {
 
-    static String accessToken = "";
-// uses a get method to get request parameter
-    public String getFBAuthUrl() {
-        String fbLoginUrl = "";
+    private static final String FB_APP_ID = FBLogin.FB_APP_ID;
+    private static final String FB_APP_SECRET = FBLogin.FB_APP_SECRET;
+    private static final String REDIRECT_URI = "http://localhost:8080/welcome";
+    private static String accessToken = "";
+
+    // uses a get method to get request parameter
+    String getFBAuthUrl() {
+        String fbLoginUrl;
 
         fbLoginUrl = "http://www.facebook.com/dialog/oauth?" + "client_id="
                 + FBConnection.FB_APP_ID + "&redirect_uri="
@@ -30,8 +30,8 @@ public class FBConnection implements FBLogin {
         return fbLoginUrl;
     }
 
-    public String getFBGraphUrl(String code) {
-        String fbGraphUrl = "";
+    private String getFBGraphUrl(String code) {
+        String fbGraphUrl;
 
         fbGraphUrl = "https://graph.facebook.com/oauth/access_token?"
                 + "client_id=" + FBConnection.FB_APP_ID + "&redirect_uri="
@@ -41,41 +41,42 @@ public class FBConnection implements FBLogin {
         return fbGraphUrl;
     }
 
-    public String getAccessToken(String code) {
-     //   if (accessToken.equals("")) {
-            URL fbGraphURL;
-            try {
-                fbGraphURL = new URL(getFBGraphUrl(code));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Invalid code received " + e);
-            }
-            URLConnection fbConnection;
-            StringBuffer b = null;
-            try {
-                fbConnection = fbGraphURL.openConnection();
-                BufferedReader in;
-                in = new BufferedReader(new InputStreamReader(
-                        fbConnection.getInputStream()));
-                String inputLine;
-                b = new StringBuffer();
-                while ((inputLine = in.readLine()) != null)
-                    b.append(inputLine + "\n");
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Unable to connect with Facebook "
-                        + e);
-            }
+    String getAccessToken(String code) {
 
-            accessToken = b.toString();
-            if (accessToken.startsWith("{")) {
-                throw new RuntimeException("ERROR: Access Token Invalid: "
-                        + accessToken);
-            }
-      //  }
+        URL fbGraphURL;
+        try {
+            fbGraphURL = new URL(getFBGraphUrl(code));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Invalid code received " + e);
+        }
+
+        URLConnection fbConnection;
+        StringBuffer b;
+        try {
+            fbConnection = fbGraphURL.openConnection();
+            BufferedReader in;
+            in = new BufferedReader(new InputStreamReader(
+                    fbConnection.getInputStream()));
+            String inputLine;
+            b = new StringBuffer();
+            while ((inputLine = in.readLine()) != null)
+                b.append(inputLine + "\n");
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to connect with Facebook "
+                    + e);
+        }
+
+        accessToken = b.toString();
+        if (accessToken.startsWith("{")) {
+            throw new RuntimeException("ERROR: Access Token Invalid: "
+                    + accessToken);
+        }
+
         return accessToken;
     }
-    
-    
+
+
 }

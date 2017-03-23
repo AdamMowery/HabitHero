@@ -14,6 +14,7 @@ import java.util.Map;
  * Created by adamm on 3/13/2017.
  */
 public class FBGraph {
+
     private String accessToken;
 
     public FBGraph(String accessToken) {

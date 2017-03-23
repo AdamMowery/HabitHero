@@ -4,7 +4,6 @@ import com.test.models.UsernamesEntity;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-
 import java.util.ArrayList;
 
 /**
@@ -12,7 +11,8 @@ import java.util.ArrayList;
  */
 public class FriendInfo extends getDBSession {
 
-    public  ArrayList<UsernamesEntity> getInfo(ArrayList<String> userFriends){
+    //takes the friend list and gets the information for each one
+    public ArrayList<UsernamesEntity> getInfo(ArrayList<String> userFriends) {
         ArrayList<UsernamesEntity> userList = new ArrayList<>();
         for (String token : userFriends) {
             Session findinfo = getSession();
@@ -22,6 +22,6 @@ public class FriendInfo extends getDBSession {
             findinfo.close();
         }
 
-    return userList ;
+        return userList;
     }
 }
