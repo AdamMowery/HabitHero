@@ -100,7 +100,7 @@
 
         <!-- About Section -->
         <section style="background-color: #50A1FF; " class="success text-center" id="addfriends" >
-            <h2 style="margin-top: 2em;">FOLLOW FRIENDS FRIENDS</h2>
+            <h2 style="margin-top: 2em;">FOLLOW FRIENDS</h2>
             <hr class="star-light">
 
             <div class="text-center" align="center">
