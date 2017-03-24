@@ -111,9 +111,9 @@
                 <h3 class="skills">CONTACT US </h3>
                 <hr class="star-light">
                 <p>
-                    <a class="btn btn-lg btn-outline" style="color: #2B3B50;  margin: 5px" href="https://www.linkedin.com/in/jeffreyblumenkopf/">JEFFREY BLUMENKOPF</a>
-                    <a class="btn btn-lg btn-outline" style="color: #2B3B50;  margin: 5px" href="https://www.linkedin.com/in/adam-mowery/">ADAM MOWERY</a>
-                    <a class="btn btn-lg btn-outline" style="color: #2B3B50;  margin: 5px" href="https://www.davidshinabarger.com/">DAVID SHINABARGER</a>
+                    <a class="btn btn-lg btn-outline" style="  margin: 5px" href="https://www.linkedin.com/in/jeffreyblumenkopf/">JEFFREY BLUMENKOPF</a>
+                    <a class="btn btn-lg btn-outline" style="  margin: 5px" href="https://www.linkedin.com/in/adam-mowery/">ADAM MOWERY</a>
+                    <a class="btn btn-lg btn-outline" style="  margin: 5px" href="https://www.davidshinabarger.com/">DAVID SHINABARGER</a>
                 </p>
                 <br>
                 <br>
