@@ -1,5 +1,7 @@
 package com.test.controller;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -70,6 +72,8 @@ class FBConnection implements FBLogin {
         }
 
         accessToken = b.toString();
+        JSONObject jsonObject = new JSONObject(accessToken);
+        accessToken = "access_token=" + jsonObject.getString("access_token");
         if (accessToken.startsWith("{")) {
             throw new RuntimeException("ERROR: Access Token Invalid: "
                     + accessToken);
