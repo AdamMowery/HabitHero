@@ -17,8 +17,8 @@ class FBConnection implements FBLogin {
 
     private static final String FB_APP_ID = FBLogin.FB_APP_ID;
     private static final String FB_APP_SECRET = FBLogin.FB_APP_SECRET;
-    private static final String REDIRECT_URI = "http://localhost:8080/welcome";
-    private static String accessToken = "";
+    private static final String REDIRECT_URI = "http://habithero.org/welcome";
+
 
     // uses a get method to get request parameter
     String getFBAuthUrl() {
@@ -70,16 +70,8 @@ class FBConnection implements FBLogin {
             throw new RuntimeException("Unable to connect with Facebook "
                     + e);
         }
-
-        accessToken = b.toString();
-        JSONObject jsonObject = new JSONObject(accessToken);
-        accessToken = "access_token=" + jsonObject.getString("access_token");
-        if (accessToken.startsWith("{")) {
-            throw new RuntimeException("ERROR: Access Token Invalid: "
-                    + accessToken);
-        }
-
-        return accessToken;
+        JSONObject accessTokenJSONObject = new JSONObject(b.toString());
+        return "access_token=" + accessTokenJSONObject.getString("access_token");
     }
 
 
